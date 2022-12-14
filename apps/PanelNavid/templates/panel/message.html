@@ -1,0 +1,17 @@
+{% extends 'panel/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4" dir={{dir}}>
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h1 class="mb-4">{{ message.subject }}</h1><small class="badge bg-primary">{{ message.user }}</small>
+                <h5 class="text-white">
+                    {{ message.message }}
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

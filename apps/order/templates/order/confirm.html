@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Confirm Buy{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'assets/order.css' %}">
+{% endblock head %}
+
+{% block body %}
+<main class="p-3 text-center">
+    <div class="badge bg-dark bg-opacity-50 w-75 p-2 couniner-pay">
+        <h1 class="text-center mx-auto bg-light text-dark col-12 col-md-4 rounded-5">Detail Your Order</h1>
+        <hr>
+        <img src="{{ beat.image_beat.url }}" class="img-thumbnail float-lg-start" width="200">
+        <div class="d-flex flex-wrap justify-content-around">
+            <span class="detail-beat text-center d-block col-6 col-lg-6 my-lg-4 text-lg-start p-3 text-danger"><i class="fa-solid fa-tag"></i>{{ beat.code }}</span>
+            <span class="detail-beat text-center d-block col-6 col-lg-6 my-lg-4 text-lg-start p-3 text-primary"><i class="fa-solid fa-signature"></i> {{ beat.title }}</span>
+            <span class="detail-beat text-center d-block col-6 col-lg-6 my-lg-4 text-lg-start p-3 text-success"><i class="fa-solid fa-money-bill"></i> {{ beat.price }} Toman</span>
+            <span class="detail-beat text-center d-block col-6 col-lg-6 my-lg-4 text-lg-start p-3 text-warning"><i class="fa-solid fa-clock"></i> {{ beat.get_time_humanize }} Minutes</span>    
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+        <small class="text-center note">If the information is correct, click on payment</small>
+        <hr>
+        <a href="{% url 'accounts:confirm-payment' %}" class="btn btn-primary col-12">Payment</a>
+    </div>~
+</main>
+{% endblock body %}

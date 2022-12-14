@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize  %}
+{% block title %}Name Beat{% endblock title %}
+
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="{% static 'assets/detail.css' %}">
+<link rel="stylesheet" href="{% static 'assets/audio.css' %}">
+<script src="{% static 'assets/audio.js' %}"></script>
+{% endblock head %}
+
+{% block body %}
+<main class="p-5">
+    <img class="img-item float-end" src="{{ beat.image_beat.url }}" alt="Navid">
+
+    <div class="detail float-start mt-5 mt-md-0">
+        <table class="table text-light text-center">
+            <tbody>
+                <tr>
+                    <th id="title-prod" scope="row" colspan="2">{{ beat.title }}</th>
+                </tr>
+                <tr>
+                    <th class="det" scope="row">Beat Id</th>
+                    <td class="det"><span class="badge bg-danger">{{ beat.code }}</span></td>
+                </tr>
+                <tr>
+                    <th class="det" scope="row">Type</th>
+                    <td class="det"><span class="badge bg-secondary">{{ beat.get_type  }}</span></td>
+                </tr>
+                <tr>
+                    <th class="det" scope="row">Time</th>
+                    <td class="det"><span class="badge bg-secondary">{{ beat.get_time_humanize  }}</span></td>
+                </tr>
+                
+                {% with beat.price as price %}
+                    
+                    
+                <tr>
+                    <th class="det" scope="row">Price</th>
+                    <td class="det"><span class="badge {% if price == 0 %}bg-success{% else %}bg-primary{% endif %}">
+                    {% if price == 0 %}Free{% else %}{{ price | intcomma }} T{% endif %}
+                    </span></td>
+                </tr>
+            </tbody>
+        </table>
+        {% if not price == 0 %}
+            {% if settings.stop_seling %}
+                <a class="btn btn-dark w-100 disabled">Sales are disabled</a>
+            {% else %}
+                <a href="{% url 'accounts:confirm' %}?beat={{ beat.code }}" class="btn btn-success w-100">Buy Full Beat</a>
+            {% endif %}
+        {% endif %}
+        {% endwith %}
+
+    </div>
+    <div class="clearfix mb-5"></div>
+
+    <div class="ag-format-container w-100">
+        <div class="ag-equlizer">
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+            <div class="js-equlizer_line ag-equlizer_line we"></div>
+        </div>
+    </div>
+
+    <div class="container-audio w-100">
+        <audio id="audio" class="w-100" preload="true" controls>
+            <source src="{{ beat.audio_beat.url }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+</main>
+{% endblock body %}

@@ -1,0 +1,27 @@
+form{
+    width: 100% !important;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin: auto;
+    padding: 50px;
+    border-radius: 10px;
+}
+#title-form{
+    text-align: center;
+    font-family: "Yellowtail";
+    
+}
+.form-control{
+    font-size: 0.8em;
+}
+
+@media (min-width: 600px) {
+    form{
+        width: 60% !important;
+        padding: 50px;
+        border-radius: 10px;
+    }
+    .form-control{
+        font-size: 1em;
+    }
+}

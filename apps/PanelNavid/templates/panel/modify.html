@@ -1,0 +1,16 @@
+{% extends 'panel/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <form class="blueForms" enctype="multipart/form-data" method="post">
+                    {% crispy form %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

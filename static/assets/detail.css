@@ -1,0 +1,41 @@
+.img-item {
+    width: 15em;
+    float: none !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.detail{
+    float: none !important;
+}
+
+table{
+    width: 100% !important;
+    cursor: default;
+}
+tr,td,th{
+    cursor: default;
+}
+
+#title-prod{
+    font-weight: 600;
+    font-size: calc(1.4rem + 1.6vw);
+}
+.det{
+    font-weight: 300;
+    font-size: calc(0.9rem + 0.9vw);
+}
+
+@media (min-width: 600px) {
+    .img-item {
+        width: 25em;
+        float: right !important;
+        display: inline;
+    }
+    table{
+        width: 30vw !important;
+    }
+    .detail{
+        float: left !important;
+    }
+}

@@ -1,0 +1,61 @@
+{% extends 'panel/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4"><span class="badge bg-primary bg-gradient" style="font-size:1.5rem">Orders</span></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Beat</th>
+                                <th scope="col">Sendded</th>
+                                <th scope="col">Recived</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Status Payment</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for order in orders %}
+                            <tr>
+                                <th scope="row">{{ order.order_code }}</th>
+                                <td>{{ order.user }}</td>
+                                <td>{{ order.beat }}</td>
+                                <td>
+                                    {% if order.sended %}
+                                    <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                    <i class="fa fa-multiply"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if order.recived %}
+                                    <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                    <i class="fa fa-multiply"></i>
+                                    {% endif %}
+                                </td>
+                                <td>{{ order.user.email }}</td>
+                                <td>{{ order.price }}</td>
+                                <td class="text-{{ order.status_payment.1 }}">
+                                    {{ order.status_payment.0 }}
+                                </td>
+                                <td>{{ order.created | timesince }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

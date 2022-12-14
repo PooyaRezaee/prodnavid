@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Orders{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'assets/user.css' %}">
+{% endblock head %}
+
+{% block body %}
+<main class="p-3">
+    <!-- fill -->
+
+    {% if orders %}
+        <div id="table-countiner" class="text-center">
+            <table class="table table-responsive">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Code Beat</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Satus</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-light">
+                    {% for order in orders %}
+                        <tr>
+                            <th scope="row"><span class="badge bg-secondary p-2 rounded-5">{{ order.order_code }}</span></th>
+                            <td scope="col"><span class="badge bg-danger p-2 rounded-5">{{ order.beat }}</span></td>
+                            <td scope="col"><span class="badge bg-primary p-2 rounded-5">{{ order.price | intcomma }}</span></td>
+                            <td scope="col"><span class="badge bg-{{ order.status_payment.1 }} {% if order.status_payment.1 == 'warning' %} text-dark {% endif %} p-2 rounded-5">{{ order.status_payment.0 }}</span></td>
+                            <td scope="col">
+                                <a href="#" class="btn btn-sm w-100 w-m-40 btn-primary">ReSend</a>
+                                <a href="#" class="btn btn-sm w-100 w-m-40 btn-warning">Report</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+    <!-- empt -->
+    <div id="empty" class="text-center">
+        <i class="text-danger fa-solid fa-xmark"></i>
+        <p>Order Is Empty</p>
+    </div>
+    {% endif %}
+
+</main>
+{% endblock body %}

@@ -1,0 +1,81 @@
+{% extends 'panel/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4"><span class="badge bg-primary bg-gradient" style="font-size:1.5rem">Beats</span></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">View</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Show</th>
+                                <th scope="col">Sold</th>
+                                <th scope="col">In Order</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Time Full</th>
+                                <th scope="col">Time Created</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for beat in beats %}
+                            <tr>
+                                <th scope="row">{{ beat.code }}</th>
+                                <td>
+                                    
+                                    {% if beat.type == 'D' %}
+                                    Demo
+                                    {% else %}
+                                    Full
+                                    {% endif %}
+                                </td>
+                                <td>{{ beat.title }}</td>
+                                <td>{{ beat.hits.count }}</td>
+                                <td>{{ beat.price }} T</td>
+                                <td> 
+                                    {% if beat.is_show %}
+                                    <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                    <i class="fa fa-multiply"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if beat.is_sold %}
+                                    <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                    <i class="fa fa-multiply"></i>
+                                    {% endif %} 
+                                </td>
+                                <td>                                  
+                                    {% if beat.is_in_order %}
+                                        <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                        <i class="fa fa-multiply"></i>
+                                    {% endif %}
+                                </td>
+                                <td>{{ beat.category }}</td>
+                                <td>{{ beat.get_time_humanize }}</td>
+                                <td>{{ beat.created | timesince }}</td>
+                                <td>
+                                    <a href="{% url 'panel:delete-beat' beat.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    <a href="{% url 'panel:modify-beat' beat.id %}" class="btn btn-primary">M</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

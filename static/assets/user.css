@@ -1,0 +1,20 @@
+#empty i{
+    font-size: 20rem;
+}
+#empty p{
+    font-size: 2rem;
+}
+
+#table-countiner{
+    font-size: 0.8rem;
+    overflow-x: auto !important;
+}
+
+@media (min-width: 600px) {
+    #table-countiner{
+        font-size: 1.2rem;
+    }
+    .w-m-40{
+        width: 40% !important;
+    }
+}

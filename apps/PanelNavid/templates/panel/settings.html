@@ -1,0 +1,30 @@
+{% extends 'panel/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4"><span class="badge bg-primary bg-gradient" style="font-size:1.5rem">Settings</span></h6>
+                <form method="post">
+                    {% crispy form %}
+                </form>
+
+                <div class="form-floating mb-3">
+                    <form action="{% url 'panel:change-background' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Update Background</label>
+                            <input class="form-control bg-dark" type="file" name='background' id="formFile">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            Changebackground
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

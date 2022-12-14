@@ -1,0 +1,7 @@
+<div>
+    {% for message in messages %}
+    <div class="mx-auto text-light text-center p-2 bg-{{ message.tags }} bg-opacity-25 w-75" style="font-size: 1.5em;font-weight: 200;">
+        {{ message | safe }}
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block head %}{% endblock head %}
+
+{% block body %}
+<main class="p-5">
+    <div class="countiner-list">
+        <h1 class="title-list">Newsted</h1>
+
+        <div class="countiner-items">
+            
+            {% for beat in newsted %}
+                <a href="{% url 'beat:detail' beat.code %}" class="items-box">
+                    <img class="img-item" src="{{ beat.image_beat.url }}" alt="Navid">
+                    <h2 class="title-item">{{ beat.title }}</h2>
+                </a>
+            {% endfor %}
+
+            <div style="position: relative;">
+                <a href="{% url 'beat:list' %}?order=time" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="countiner-list">
+        <h1 class="title-list">Most Viewed</h1>
+        <div class="countiner-items">
+
+            {% for beat in mustview %}
+                <a href="{% url 'beat:detail' beat.code %}" class="items-box">
+                    <img class="img-item" src="{{ beat.image_beat.url }}" alt="Navid">
+                    <h2 class="title-item">{{ beat.title }}</h2>
+                </a>
+            {% endfor %}
+            <div style="position: relative;">
+                <a href="{% url 'beat:list' %}?order=view" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    {% if free %}
+        <div class="countiner-list">
+            <h1 class="title-list">Free</h1>
+
+            <div class="countiner-items">
+                {% for beat in free %}
+                    <a href="{% url 'beat:detail' beat.code %}" class="items-box">
+                        <img class="img-item" src="{{ beat.image_beat.url }}" alt="Navid">
+                        <h2 class="title-item">{{ beat.title }}</h2>
+                    </a>
+                {% endfor %}
+                <div style="position: relative;">
+                    <a href="{% url 'beat:free' %}" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% for category in categories_on_home %}
+        {% if category.beat_set.published %}            
+            <div class="countiner-list">
+                <h1 class="title-list">{{ category.name }}</h1>
+
+                <div class="countiner-items">
+                    {% for beat in category.beat_set.published %}
+                        <a href="{% url 'beat:detail' beat.code %}" class="items-box">
+                            <img class="img-item" src="{{ beat.image_beat.url }}" alt="Navid">
+                            <h2 class="title-item">{{ beat.title }}</h2>
+                        </a>
+                    {% endfor %}
+                    <div style="position: relative;">
+                        <a href="{% url 'beat:category' category.slug %}" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</main>
+{% endblock body %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block head %}{% endblock head %}
+
+{% block body %}
+<main class="p-5">
+    <center class="">
+        <h1>Page Not Found</h1>
+        <a href="{% url 'beat:index' %}">Back To Home</a>
+    </center>
+</main>
+{% endblock body %}

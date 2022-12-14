@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Beats{% endblock title %}
+
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+<main class="p-5">
+    <div class="nav-beat d-md-flex w-100 justify-content-md-between">
+        <div>
+            <span class="btn border-0 text-light" style="cursor: default;">Category : </span>
+            <div class="bg-dark bg-opacity-50 p-3 d-flex flex-md-row flex-wrap justify-content-start">
+                <a href="{% url 'beat:list' %}" class="btn btn-sm {% if not category_active %}btn-danger{% else %}btn-outline-danger{% endif %} mx-2 p-1">All</a>
+                {% for category in categories %}
+                    <a href="{% if free %}{% url 'beat:category-free' category.slug %}{% else %}{% url 'beat:category' category.slug %}{% endif %}" class="btn btn-sm {% if category_active == category.slug %}btn-danger{% else %}btn-outline-danger{% endif %} mx-2 p-1">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div>
+            <span class="btn border-0 text-light" style="cursor: default;">Order By : </span>
+            <div class="bg-dark bg-opacity-50 p-3 d-flex flex-row justify-content-end">
+                <a href="?order=time" class="btn btn-sm p-1 {% if order == 'view' %}btn-outline-light{% else %}btn-light{% endif %} mx-2">Newster</a>
+                <a href="?order=view" class="btn btn-sm p-1 {% if order == 'view' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">Most View</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="d-flex flex-wrap justify-content-between">
+        
+        {% for beat in beats %}
+            <a href="{% url 'beat:detail' beat.code %}" class="items-box">
+                <img class="img-item" src="{{ beat.image_beat.url }}" alt="{{ beat.title }}-navid">
+                <h2 class="title-item">{{ beat.title }}</h2>
+            </a>
+        {% endfor %}
+            
+
+    </div>
+</main>
+{% endblock body %}

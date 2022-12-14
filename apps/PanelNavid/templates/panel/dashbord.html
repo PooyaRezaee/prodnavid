@@ -1,0 +1,188 @@
+{% extends 'panel/base.html' %}
+
+{% block content %}
+            <!-- Sale & Revenue Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-line fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Requests</p>
+                                <h6 class="mb-0">{{ requests_count }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-user fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Users</p>
+                                <h6 class="mb-0">{{ user_count }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-music fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Beat</p>
+                                <h6 class="mb-0">{{ beats_count }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-cart-shopping fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Order</p>
+                                <h6 class="mb-0">{{ order_count }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sale & Revenue End -->
+
+            <!-- Charts -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Views</h6>
+                            <canvas id="line-chart" width="742" height="742" style="display: block; box-sizing: border-box; height: 742px; width: 742px;"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Beat On Categories</h6>
+                            <canvas id="pie-chart" width="742" height="742" style="display: block; box-sizing: border-box; height: 742px; width: 742px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        <!-- Calender -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-12 col-md-6 col-xl-6">
+                    <div class="h-100 bg-secondary rounded p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-0">Calender</h6>
+                        </div>
+                        <div id="calender"></div>
+                    </div>
+                </div>
+
+
+                <!-- TabWidget -->
+                <div class="col-sm-12 col-xl-6">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <h6 class="mb-4">Other</h6>
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                    aria-selected="true">MustViews</button>
+                                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-profile" type="button" role="tab"
+                                    aria-controls="nav-profile" aria-selected="false">LastRequests</button>
+                                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-contact" type="button" role="tab"
+                                    aria-controls="nav-contact" aria-selected="false">Empty(test)</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content pt-3" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="h-100 bg-secondary rounded p-4">
+
+                                    
+                                    {% for beat in beat_mustViews %}
+                                    <div class="d-flex align-items-center border-bottom py-3">
+                                        <img class="rounded-circle flex-shrink-0" src="{{ beat.image_beat.url }}" alt="" style="width: 40px; height: 40px;">
+                                        <div class="w-100 ms-3">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-0">{{ beat.title }}</h6>
+                                            </div>
+                                            <span>{{ beat.hits.count }} seen</span>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="h-100 bg-secondary rounded p-4">
+                                    
+                                    
+                                    {% for request in last_requests %}
+                                    <div class="d-flex align-items-center border-bottom py-3">
+                                        <div class="w-100 ms-3">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-0">{{ request.route }}</h6>
+                                                <small>{{ request.ip_addr }}</small>
+                                            </div>
+                                            <span>{{ request.created | timesince }}</span>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                Null
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    // Single Line Chart
+var ctx3 = $("#line-chart").get(0).getContext("2d");
+var myChart3 = new Chart(ctx3, {
+type: "line",
+data: {
+    labels: [...Array(30).keys()],
+    datasets: [{
+        label: "Request",
+        fill: false,
+        backgroundColor: "rgba(235, 22, 22, .7)",
+        data: [{% for day in request_in_month %}{{ day }},{% endfor %}]
+    }]
+},
+options: {
+    responsive: true
+}
+});
+
+
+// Pie Chart
+var ctx5 = $("#pie-chart").get(0).getContext("2d");
+var myChart5 = new Chart(ctx5, {
+type: "pie",
+data: {
+    labels: [{% for cat in category_beat %}'{{ cat.0 }}',{% endfor %}],
+    datasets: [{
+        backgroundColor: [
+            "rgba(235, 22, 22, .7)",
+            "rgba(235, 22, 22, .6)",
+            "rgba(235, 22, 22, .5)",
+            "rgba(235, 22, 22, .4)",
+            "rgba(235, 22, 22, .3)"
+        ],
+        data: [{% for cat in category_beat %}{{ cat.1 }},{% endfor %}]
+    }]
+},
+options: {
+    responsive: true
+}
+});
+</script>
+{% endblock script %}

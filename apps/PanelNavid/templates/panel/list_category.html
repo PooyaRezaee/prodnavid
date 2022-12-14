@@ -1,0 +1,48 @@
+{% extends 'panel/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4"><span class="badge bg-primary bg-gradient" style="font-size:1.5rem">Categories</span></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Slug</th>
+                                <th scope="col">On Home</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for category in categories %}
+                            <tr>
+                                <th scope="row">{{ category.id }}</th>
+                                <td>{{ category.name }}</td>
+                                <td>{{ category.slug }}</td>
+                                <td>
+                                    {% if category.on_home %}
+                                    <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                    <i class="fa fa-multiply"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'panel:delete-category' category.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    <a href="{% url 'panel:modify-category' category.id %}" class="btn btn-primary">M</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

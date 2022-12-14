@@ -1,0 +1,44 @@
+{% extends 'panel/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-center p-4">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Messages</p>
+                    <h6 class="mb-0">{{ messages_user.count }}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Messages</h6>
+                
+                {% for message in messages_user %}
+                <a href="{% url 'panel:message' message.id %}">
+                    <div class="border rounded p-4 pb-0 mb-4">
+                        <figure class="text-center">
+                            <blockquote class="blockquote {% if not message.seen %}text-info{% endif %}">
+                                <p>{{ message.subject }}</p>
+                            </blockquote>
+                            <figcaption class="blockquote-footer">
+                                {{ message.user }}
+                            </figcaption>
+                        </figure>
+                    </div>
+                </a>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

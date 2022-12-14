@@ -1,0 +1,164 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin Panel</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    
+    <link href="{% static 'panel/custom-asset/font-google.css' %}" rel="stylesheet"> 
+    
+    <link href="{% static 'assets/node_modules/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'panel/custom-asset/fontawesome-free-6.2.1-web/css/all.min.css' %}">
+
+    <link href="{% static 'panel/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'panel/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+    <link href="{% static 'panel/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'panel/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Admin Panel</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">{{ request.user.full_name }}</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="{% url 'panel:dashbord' %}" class="nav-item nav-link {% if route == 'dashbord' %}active{% endif %}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle {% if 'beat' in route or 'category' in route%}active{% endif %}" data-bs-toggle="dropdown"><i class="fa fa-music me-2"></i>Beat</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="{% url 'panel:add-beat' %}" class="dropdown-item {% if route == 'add-beat' %}active{% endif %}">Add New Beat</a>
+                            <a href="{% url 'panel:add-category' %}" class="dropdown-item {% if route == 'add-category' %}active{% endif %}">Add Category Beat</a>
+                            <a href="{% url 'panel:list-beat' %}" class="dropdown-item {% if route == 'list-beat' %}active{% endif %}">List Beats</a>
+                            <a href="{% url 'panel:list-category' %}" class="dropdown-item {% if route == 'list-category' %}active{% endif %}">List Categories</a>
+                        </div>
+                    </div>
+                    <a href="{% url 'panel:orders' %}" class="nav-item nav-link {% if route == 'order' %}active{% endif %}"><i class="fa fa-solid fa-cart-shopping me-2"></i>Orders</a>
+                    <a href="{% url 'panel:send-email' %}" class="nav-item nav-link {% if route == 'send-email' %}active{% endif %}"><i class="fa fa-mail-forward me-2"></i>Send Email</a>
+                    <a href="{% url 'panel:messages' %}" class="nav-item nav-link {% if route == 'messages' %}active{% endif %}"><i class="fa fa-envelope me-2"></i>Messages</a>
+                    <a href="{% url 'panel:settings' %}" class="nav-item nav-link {% if route == 'settings' %}active{% endif %}"><i class="fa fa-keyboard me-2"></i>Settings</a>
+                    <hr>
+                    <a href="{% url 'accounts:logout' %}" class="nav-item nav-link bg-dark"><i class="fa fa-door-open me-2"></i>Logout</a>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-envelope me-lg-2  {% if new_messages %}text-info{% endif %}"></i>
+                            <span class="d-none d-lg-inline-flex">New Mesages</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            {% for message in new_messages %}
+                                <a href="{% url 'panel:message' message.id %}" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">{{ message.subject }} | {{ message.user }}</h6>
+                                            <small>{{ message.created | timesince }}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="dropdown-divider">
+                            {% empty %}
+                                <div class="dropdown-item bg-black">
+                                    <div class="d-flex align-items-center">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Don't Have New Message</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="dropdown-divider">
+                            {% endfor %}
+                            <a href="{% url 'panel:messages' %}" class="dropdown-item text-center">See all message</a>
+
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Profile updated</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">New user added</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Password changed</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+            {% include 'panel/inc/messages.html' %}
+            {% block content %}{% endblock content %}
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="{% static 'assets/node_modules/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'panel/lib/chart/chart.min.js' %}"></script>
+    <script src="{% static 'panel/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'panel/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'panel/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'panel/lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'panel/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'panel/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'panel/js/main.js' %}"></script>
+    {% block script %}{% endblock script %}
+</body>
+
+</html>

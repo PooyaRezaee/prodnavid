@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile User{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'assets/form.css' %}">
+{% endblock head %}
+
+{% block body %}
+    <main class="p-5 my-5">
+        <div id="form-box" class="my-5">
+            <form method="post">
+                <h1 id="title-form" class="mb-5 display-3">Update Your Profile</h1>
+                {% csrf_token %}    
+                {{ form.as_p }}
+                <input type="submit" value="Update" class="btn btn-primary w-100"> <br>
+            </form>
+        </div>
+    </main>
+{% endblock body %}

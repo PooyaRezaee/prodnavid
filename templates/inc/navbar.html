@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-dark p-4">
+    <div class="container-fluid">
+        <h1 id="nav-lable" class="text-center me-3 text-danger" style="cursor: pointer;">ProdNavid</h1>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'beat:list' %}">Beats</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'beat:about' %}">About Me</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'beat:developer' %}">Developer</a>
+                </li>
+            </ul>
+            <hr>
+            <ul class="navbar-nav ms-auto">
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item m-1">
+                    <a id="btn-register" class="nav-link btn btn-outline-primary text-primary w-100"
+                        aria-current="page" href="{% url 'accounts:register' %}">Register</a>
+                </li>
+                <li class="nav-item m-1">
+                    <a id="btn-login" class="nav-link btn btn-outline-success text-success w-100"
+                        aria-current="page" href="{% url 'accounts:login' %}">Login</a>
+                </li>
+                {% else %} 
+                
+                {% if request.user.is_admin %}
+                    <li class="nav-item dropdown me-2">
+                        <div class="nav-link">
+                            <span type="button" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-secret"></i> User
+                            </span>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'panel:login' %}">GoPanel</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown me-2">
+                        <div class="nav-link">
+                            <span type="button" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user"></i> User
+                            </span>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:orders' %}">Orders</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                    
+                <li class="nav-item m-1">
+                    <a id="btn-login" class="nav-link btn btn-outline-danger text-danger text-danger w-100"
+                        aria-current="page" href="{% url 'accounts:logout' %}">Logout</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
