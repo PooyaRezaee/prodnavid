@@ -3,6 +3,8 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 from .models import User
 
@@ -71,6 +73,10 @@ class UserRegisterForm(forms.Form):
     meet = forms.ChoiceField(choices=User.FIND_CHOICE,required=False,widget=forms.Select(attrs={'class': 'form-control mx-auto w-100','placeholder':'How Meet'}),label='How Toy Meet ?')
     captcha = ReCaptchaField(widget=ReCaptchaV3)
 
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Register', css_class='btn btn-primary w-100'))
+    helper.form_method = 'POST'
+
     def clean_email(self):
         email = self.cleaned_data['email']
         user = User.objects.filter(email=email).exists()
@@ -83,7 +89,10 @@ class UserRegisterForm(forms.Form):
         reapet_password = self.cleaned_data.get('password_r')
         if password and reapet_password:
             if password == reapet_password:
-                return reapet_password
+                if len(password) >= 6:
+                    return reapet_password
+                else:
+                    raise ValidationError('Password Is Short')
             else:
                 raise ValidationError('Password Not Mach')
 

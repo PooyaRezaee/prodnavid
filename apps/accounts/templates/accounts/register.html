@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}Register User{% endblock title %}
 
@@ -12,9 +13,7 @@
     <div id="form-box" class="mb-5">
         <form method="post">
             <h1 id="title-form" class="mb-5 display-3">Register</h1>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Register" class="btn btn-primary w-100"> <br>
+            {% crispy form %}
         </form>
     </div>
 </main>
