@@ -18,7 +18,7 @@ class MessageForm(forms.ModelForm):
         exclude = ("meta","user","seen")
 
         widgets = {
-            'message': forms.Textarea(),
+            'message': forms.Textarea(attrs={'id':'message'}),
         }
     
     helper = FormHelper()

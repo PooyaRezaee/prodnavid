@@ -32,8 +32,12 @@
                             <td scope="col"><span class="badge bg-primary p-2 rounded-5">{{ order.price | intcomma }}</span></td>
                             <td scope="col"><span class="badge bg-{{ order.status_payment.1 }} {% if order.status_payment.1 == 'warning' %} text-dark {% endif %} p-2 rounded-5">{{ order.status_payment.0 }}</span></td>
                             <td scope="col">
-                                <a href="{% url 'accounts:resend' order.order_code %}" class="btn btn-sm w-100 w-m-40 btn-primary">ReSend</a>
-                                <a href="#" class="btn btn-sm w-100 w-m-40 btn-warning">Report</a>
+                                {% if order.status_payment.0 == 'Paid' %}
+                                    <a href="{% url 'accounts:resend' order.order_code %}" class="btn btn-sm w-100 w-m-40 btn-primary">ReSend</a>
+                                {% else %}
+                                    <a href="{{ order.payment.link }}" class="btn btn-sm w-100 w-m-40 btn-primary">Pay</a>
+                                {% endif %}
+                                <a href="{% url 'beat:about' %}#message" class="btn btn-sm w-100 w-m-40 btn-warning">Report</a>
                             </td>
                         </tr>
                     {% endfor %}

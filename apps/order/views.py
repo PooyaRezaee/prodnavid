@@ -66,6 +66,10 @@ class ConfirmPayment(LoginRequiredMixin,View):
     def get(self,request):
         beat_code = self.request.session['code']
         beat = Beat.objects.get(code=beat_code)
+        if beat.is_in_order:
+            messages.warning(request,'Beat Not available',extra_tags='warning')
+            return redirect('beat:index')
+
         if beat_code:
             payment = Payment.objects.create(link='null')
             while True:
@@ -168,7 +172,7 @@ class VerifyPaymentView(View):
                 e_message = req.json()['errors']['message']
                 messages.warning(request,f'Have A Error In Payment,Plase Send Message To Email <br>Error code: {e_code}, Error Message: {e_message}')
                 return redirect('beat:index')
-        if request.GET.get('Status') == 'test': # TEST
+        elif request.GET.get('Status') == 'test': # TEST
             order = Order.objects.get(order_code=self.request.session['order_code'])
             beat = Beat.objects.get(code=self.request.session['code'])
             messages.success(request,'You Order Paid<br>Tank You For Trust To Me',extra_tags='success')
@@ -222,4 +226,6 @@ class ResendBeat(LoginRequiredMixin,View):
         
         return redirect('accounts:orders')
 
-                
+# class SendReport(LoginRequiredMixin,View):
+#     def get(self,request):
+#         return HttpResponseRedirect(reverse('beat:about') + '#message')
