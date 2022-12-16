@@ -146,7 +146,6 @@ class VerifyPaymentView(View):
                     order.save()
                     order.payment.save()
                     beat.is_sold = True
-                    beat.is_show = False
                     beat.save()
                     # SEND BEAT TO EMAIL
                     message = f"""
@@ -183,7 +182,6 @@ class VerifyPaymentView(View):
             order.save()
             order.payment.save()
             beat.is_sold = True
-            beat.is_show = False
             beat.save()
             # SEND BEAT TO EMAIL
             message = f"""

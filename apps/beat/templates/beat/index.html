@@ -32,7 +32,7 @@
             {% for beat in mustview %}
                 <a href="{% url 'beat:detail' beat.code %}" class="items-box">
                     <img class="img-item" src="{{ beat.image_beat.url }}" alt="Navid">
-                    <h2 class="title-item">{{ beat.title }}</h2>
+                    <h2 class="title-item {% if beat.is_sold %}text-danger{% endif %}" {% if beat.is_sold %}style="text-decoration:line-through;"{% endif %}>{{ beat.title }}</h2>
                 </a>
             {% endfor %}
             <div style="position: relative;">
@@ -40,6 +40,7 @@
             </div>
         </div>
     </div>
+
 
     {% if free %}
         <div class="countiner-list">
@@ -60,15 +61,15 @@
     {% endif %}
 
     {% for category in categories_on_home %}
-        {% if category.beat_set.published %}            
+        {% if category.beats.published %}            
             <div class="countiner-list">
                 <h1 class="title-list">{{ category.name }}</h1>
 
                 <div class="countiner-items">
-                    {% for beat in category.beat_set.published %}
+                    {% for beat in category.beats.published %}
                         <a href="{% url 'beat:detail' beat.code %}" class="items-box">
                             <img class="img-item" src="{{ beat.image_beat.url }}" alt="Navid">
-                            <h2 class="title-item">{{ beat.title }}</h2>
+                            <h2 class="title-item {% if beat.is_sold %}text-danger{% endif %}" {% if beat.is_sold %}style="text-decoration:line-through;"{% endif %}>{{ beat.title }}</h2>
                         </a>
                     {% endfor %}
                     <div style="position: relative;">

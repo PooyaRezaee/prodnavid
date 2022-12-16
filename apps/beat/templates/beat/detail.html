@@ -20,7 +20,7 @@
         <table class="table text-light text-center">
             <tbody>
                 <tr>
-                    <th id="title-prod" scope="row" colspan="2">{{ beat.title }}</th>
+                    <th id="title-prod" scope="row" colspan="2" class=" {% if beat.is_sold %}text-danger{% endif %}" {% if beat.is_sold %}style="text-decoration:line-through;"{% endif %}>{{ beat.title }}</th>
                 </tr>
                 <tr>
                     <th class="det" scope="row">Beat Id</th>
@@ -40,14 +40,22 @@
                     
                 <tr>
                     <th class="det" scope="row">Price</th>
-                    <td class="det"><span class="badge {% if price == 0 %}bg-success{% else %}bg-primary{% endif %}">
-                    {% if price == 0 %}Free{% else %}{{ price | intcomma }} T{% endif %}
+                    <td class="det"><span class="badge {% if price == 0 %}bg-success{% elif beat.is_sold %}bg-danger{% else %}bg-primary{% endif %}">
+                    {% if price == 0 %}
+                        Free
+                    {% elif beat.is_sold %}
+                        Sold
+                    {% else %}
+                        {{ price | intcomma }} T
+                    {% endif %}
                     </span></td>
                 </tr>
             </tbody>
         </table>
         {% if not price == 0 %}
-            {% if settings.stop_seling %}
+            {% if beat.is_sold %}
+                <a class="btn btn-dark w-100 disabled">Sold</a>
+            {% elif settings.stop_seling %}
                 <a class="btn btn-dark w-100 disabled">Sales are disabled</a>
             {% else %}
                 <a href="{% url 'accounts:confirm' %}?beat={{ beat.code }}" class="btn btn-success w-100">Buy Full Beat</a>
