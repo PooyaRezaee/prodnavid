@@ -12,6 +12,7 @@ import random
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from datetime import datetime
+from django.shortcuts import get_object_or_404
 
 # ZARIN PAL
 from django.http import HttpResponse
@@ -32,6 +33,7 @@ __all__ = [
     'ConfirmOrder',
     'ConfirmPayment',
     'VerifyPaymentView',
+    'ResendBeat'
 ]
 
 class OrdersView(LoginRequiredMixin,ListView):
@@ -149,8 +151,8 @@ class VerifyPaymentView(View):
                     This Link Is Your Full Beat
                     {beat.main_beat.url}
 
-                    BeatID:{order.order_code}
-                    ORderID:{beat.code}
+                    BeatID:{beat.code}
+                    OrderID:{order.order_code}
                     """
                     order.user.send_email('ProdNaid : Full Beat',message)
                     messages.info(request,'Beat File Sended To Email For You')
@@ -186,8 +188,8 @@ class VerifyPaymentView(View):
             This Link Is Your Full Beat
             {beat.main_beat.url}
 
-            BeatID:{order.order_code}
-            ORderID:{beat.code}
+            BeatID:{beat.code}
+            OrderID:{order.order_code}
             """
             order.user.send_email('ProdNaid : Full Beat',message)
             messages.info(request,'Beat File Sended To Email For You')
@@ -195,3 +197,29 @@ class VerifyPaymentView(View):
         else:
             messages.warning(request,'Transaction failed or canceled by user')
             return redirect('beat:index')
+    
+
+class ResendBeat(LoginRequiredMixin,View):
+    def get(self,request,order_id):
+        order = get_object_or_404(Order,order_code=order_id)
+        if order.user == request.user:
+            if order.payment.status == 'P':
+                message = f"""
+                    Hey {order.user},
+                    This is Link Your Beat
+                    {order.beat.main_beat.url}
+
+                    BeatID:{order.beat.code}
+                    OrderID:{order.order_code}
+                """
+
+                order.user.send_email('ProdNaid : ResendBeat',message)
+                messages.success(request,'Resendded Beat TO Your Email',extra_tags='success')
+            else:
+                messages.warning(request,'Must First Pay this Beat',extra_tags='warning')
+        else:
+            messages.warning(request,'Error Internal',extra_tags='danger')
+        
+        return redirect('accounts:orders')
+
+                

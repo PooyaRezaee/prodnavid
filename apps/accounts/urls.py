@@ -13,4 +13,5 @@ urlpatterns = [
     path('order/confirm/',ConfirmOrder.as_view(),name='confirm'),
     path('order/confirm/payment/',ConfirmPayment.as_view(),name='confirm-payment'),
     path('order/verify/',VerifyPaymentView.as_view(),name='verify-payment'),
+    path('order/<int:order_id>/',ResendBeat.as_view(),name='resend'),
 ]
