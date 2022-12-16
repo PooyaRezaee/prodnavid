@@ -61,6 +61,7 @@
                         </div>
                     </div>
                     <a href="{% url 'panel:orders' %}" class="nav-item nav-link {% if route == 'order' %}active{% endif %}"><i class="fa fa-solid fa-cart-shopping me-2"></i>Orders</a>
+                    <a href="{% url 'panel:users' %}" class="nav-item nav-link {% if route == 'users' %}active{% endif %}"><i class="fa fa-solid fa-user me-2"></i>Users</a>
                     <a href="{% url 'panel:send-email' %}" class="nav-item nav-link {% if route == 'send-email' %}active{% endif %}"><i class="fa fa-mail-forward me-2"></i>Send Email</a>
                     <a href="{% url 'panel:messages' %}" class="nav-item nav-link {% if route == 'messages' %}active{% endif %}"><i class="fa fa-envelope me-2"></i>Messages</a>
                     <a href="{% url 'panel:settings' %}" class="nav-item nav-link {% if route == 'settings' %}active{% endif %}"><i class="fa fa-keyboard me-2"></i>Settings</a>

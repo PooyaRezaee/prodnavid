@@ -42,7 +42,8 @@ __all__ = [
     'ModifyCategoryView',
     'MessagesView',
     'MessageView',
-    'OrdersView'
+    'OrdersView',
+    'UserListView'
 ]
 
 @method_decorator(axes_dispatch, name='dispatch')
@@ -389,7 +390,7 @@ class MessageView(IsAdminMixin,DetailView):
             message.seen = True
             message.save()
         subject = message.subject
-        persian_list = 'ضصثقفغعهخحجچگکمنتالبیسشظطزرذدپ'
+        persian_list = 'ProdNavid'
         english_count = 0
         persian_count = 0
         for char in subject:
@@ -415,4 +416,24 @@ class OrdersView(IsAdminMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["route"] = 'order'
+        return context
+
+class UserListView(ListView):
+    template_name = 'panel/users.html'
+    model = User
+    context_object_name = 'users'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['route'] = 'users'
+
+        context['count_f'] = User.objects.filter(how_meet='fri').count()
+        context['count_g'] = User.objects.filter(how_meet='goo').count()
+        context['count_s'] = User.objects.filter(how_meet='soc').count()
+        context['count_o'] = User.objects.filter(how_meet='oth').count()
+
+        for user in User.objects.all():
+            print(user.how_meet)
+
+
         return context

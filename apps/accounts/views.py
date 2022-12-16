@@ -27,7 +27,7 @@ class RegisterView(WithoutLoginRequiredMixin,FormView):
 
     def form_valid(self, form):
         cd = form.cleaned_data
-        user = User.objects.create_user(full_name=cd['full_name'],email=cd['email'],password=cd['password'])
+        user = User.objects.create_user(full_name=cd['full_name'],email=cd['email'],password=cd['password'],how_meet=cd['meet'])
         user.send_email('ProdNavid | Registration','Congratulations\nyour account has been successfully created')
         messages.success(self.request,'You Registred',extra_tags='success')
         messages.info(self.request,'Please Login To page',extra_tags='info')

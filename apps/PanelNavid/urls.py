@@ -22,4 +22,5 @@ urlpatterns = [
     path('settings/',SettingsView.as_view(),name='settings'),   
     path('settings/background/',ChangeBackground.as_view(),name='change-background'),   
     path('orders/',OrdersView.as_view(),name='orders'),   
+    path('users/',UserListView.as_view(),name='users'),   
 ]

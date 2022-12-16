@@ -1,0 +1,83 @@
+{% extends 'panel/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4"><span class="badge bg-primary bg-gradient" style="font-size:1.5rem">Users</span></h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">PhoneNumber</th>
+                                <th scope="col">Is Admin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for user in users %}
+                            <tr>
+                                <th scope="row">{{ user.id }}</th>
+                                <td>{{ user.full_name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone_number }}</td>
+                                <td>
+                                    {% if user.is_admin %}
+                                    <i class="fa fa-check-circle"></i>
+                                    {% else %}
+                                    <i class="fa fa-multiply"></i>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+            <div class="col-sm-12 col-xl-4 mx-auto">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Chart Meet</h6>
+                    <canvas id="doughnut-chart"></canvas>
+                </div>
+            </div>
+        </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+<script>
+var ctx6 = $("#doughnut-chart").get(0).getContext("2d");
+var myChart5 = new Chart(ctx6, {
+type: "doughnut",
+data: {
+    labels: ['Firnd','Google','social','other'],
+    datasets: [{
+        backgroundColor: [
+            "rgba(235, 22, 22, .7)",
+            "rgba(235, 22, 22, .6)",
+            "rgba(235, 22, 22, .5)",
+            "rgba(235, 22, 22, .4)",
+            "rgba(235, 22, 22, .3)"
+        ],
+        data: [{{count_f}},{{count_g}},{{count_s}},{{count_o}}]
+    }]
+},
+options: {
+    responsive: true
+}
+});
+</script>
+{% endblock script %}

@@ -5,7 +5,7 @@ from django.contrib.auth.models import PermissionsMixin
 from .utils import send_custom_email
 
 class UserManager(BaseUserManager):
-    def create_user(self,email,full_name,password):
+    def create_user(self,email,full_name,password,how_meet):
 
         if not email:
             raise ValueError('user must have email number')
@@ -20,6 +20,7 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             full_name=full_name,
+            how_meet=how_meet
         )
 
         user.set_password(password)
