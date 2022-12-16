@@ -1,0 +1,46 @@
+{% extends 'panel/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4"><span class="badge bg-primary bg-gradient" style="font-size:1.5rem">{{ route | upper }}</span></h6>
+
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                        aria-selected="true">sale</button>
+                                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                        data-bs-target="#nav-profile" type="button" role="tab"
+                                        aria-controls="nav-profile" aria-selected="false">Free</button>
+                                </div>
+                            </nav>
+                            <div class="tab-content pt-3" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="h-100 bg-secondary rounded p-4">
+    
+                                        <form action="{% url 'panel:add-sale' %}" class="blueForms" enctype="multipart/form-data" method="post">
+                                            {% crispy form_sale %}
+                                        </form>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="h-100 bg-secondary rounded p-4">
+                                        
+                                        <form action="{% url 'panel:add-free' %}" class="blueForms" enctype="multipart/form-data" method="post">
+                                            {% crispy form_free %}
+                                        </form>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

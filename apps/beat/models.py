@@ -32,10 +32,10 @@ class Beat(models.Model):
 
     code = models.PositiveIntegerField(unique=True,blank=True)
     title = models.CharField(max_length=32,unique=True)
-    audio_beat = models.FileField()
-    main_beat = models.FileField(blank=True,null=True)
+    audio_beat = models.FileField(upload_to='public/')
+    main_beat = models.FileField(upload_to='prive/',blank=True,null=True)
     time_audio = models.IntegerField(blank=True,null=True)
-    image_beat = models.ImageField()
+    image_beat = models.ImageField(upload_to='img/')
     type = models.CharField(max_length=1,choices=TYPE_CHOICE)
     price = models.PositiveIntegerField()
     is_show = models.BooleanField(default=True)

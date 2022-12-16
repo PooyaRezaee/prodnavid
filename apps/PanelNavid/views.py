@@ -28,6 +28,8 @@ __all__ = [
     'LoginView',
     'DashbordView',
     'AddBeatView',
+    'AddFreeBeatView',
+    'AddSaleBeatView',
     'AddCategoryView',
     'BeatListView',
     'CategoryListView',
@@ -130,10 +132,18 @@ class DashbordView(IsAdminMixin,View):
         }
         return render(request,'panel/dashbord.html',context)
 
-class AddBeatView(IsAdminMixin,CreateView):
-    template_name = 'panel/add.html'
+class AddBeatView(IsAdminMixin,View):
+    template_name = 'panel/add_beat.html'
     success_url = reverse_lazy('panel:dashbord')
-    form_class  = CreateBeatForm
+    
+    def get(self,request):
+        context = {
+            'form_sale':CreateSaleBeatForm,
+            'form_free':CreateFreeBeatForm,
+            'route': 'add-beat'
+        }
+        return render(request,self.template_name,context)
+
 
     def form_valid(self, form):
         messages.success(self.request,'Beat Added',extra_tags='success')
@@ -142,15 +152,53 @@ class AddBeatView(IsAdminMixin,CreateView):
     def form_invalid(self, form):
         messages.warning(self.request,'Form Not Valid',extra_tags='warning')
         return super().form_invalid(form)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["route"] = 'add-beat'
-        return context
-    
+
+class AddFreeBeatView(IsAdminMixin,View):
+    def post(self,request):
+        form = CreateFreeBeatForm(request.POST, request.FILES)
+        if form.is_valid():
+            cd = form.cleaned_data
+            Beat.objects.create(
+                title=cd['title'],
+                audio_beat=cd['audio_beat'],
+                image_beat=cd['image_beat'],
+                type='F',
+                price=0,
+                is_show=cd['is_show'],
+                category=cd['category'],
+            )
+            messages.success(self.request,'Beat Added',extra_tags='success')
+        else:
+            messages.warning(self.request,'Form Not Valid',extra_tags='warning')
+        
+        return redirect('panel:add-beat')
+
+
+
+class AddSaleBeatView(IsAdminMixin,View):
+    def post(self,request):
+        form = CreateSaleBeatForm(request.POST, request.FILES)
+        if form.is_valid():
+            cd = form.cleaned_data
+            Beat.objects.create(
+                title=cd['title'],
+                audio_beat=cd['audio_beat'],
+                main_beat=cd['main_beat'],
+                image_beat=cd['image_beat'],
+                type='D',
+                price=cd['price'],
+                is_show=cd['is_show'],
+                category=cd['category'],
+            )
+            messages.success(self.request,'Beat Added',extra_tags='success')
+        else:
+            messages.warning(self.request,'Form Not Valid',extra_tags='warning')
+        
+        return redirect('panel:add-beat')
+
 
 class AddCategoryView(IsAdminMixin,CreateView):
-    template_name = 'panel/add.html'
+    template_name = 'panel/add_category.html'
     success_url = reverse_lazy('panel:dashbord')
     form_class  = CreateCategoryForm
 

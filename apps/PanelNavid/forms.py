@@ -5,7 +5,8 @@ from apps.beat.models import Beat,Category
 from .models import SiteSettings
 
 __all__ = [
-    'CreateBeatForm',
+    'CreateSaleBeatForm',
+    'CreateFreeBeatForm',
     'CreateCategoryForm',
     'SendEmailForm',
     'SettingSiteForm',
@@ -13,15 +14,33 @@ __all__ = [
     'UpdateCategoryForm',
 ]
 
-class CreateBeatForm(forms.ModelForm):
+class CreateSaleBeatForm(forms.ModelForm):
     class Meta:
         model = Beat
 
-        exclude = ('code','time_audio','hits')
+        exclude = ('code','time_audio','type','is_sold','hits')
 
     helper = FormHelper()
     helper.add_input(Submit('submit', 'Add Beat', css_class='btn btn-primary w-100'))
     helper.form_method = 'POST'
+
+class CreateFreeBeatForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['centro_di_costo'].value= "Servizi di Produzione"
+    #     self.fields['sub_centro_di_costo'].value = "Collaboratori esterni"
+    #     self.fields['status'].value = "VARIABILE"
+
+    class Meta:
+        model = Beat
+
+        exclude = ('code','time_audio','type','is_sold','hits','main_beat','price')
+
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Add Beat', css_class='btn btn-primary w-100'))
+    helper.form_method = 'POST'
+
+
 
 class CreateCategoryForm(forms.ModelForm):
     class Meta:
