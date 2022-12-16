@@ -66,7 +66,7 @@ class ConfirmPayment(LoginRequiredMixin,View):
     def get(self,request):
         beat_code = self.request.session['code']
         beat = Beat.objects.get(code=beat_code)
-        if beat.is_in_order:
+        if beat.is_in_order():
             messages.warning(request,'Beat Not available',extra_tags='warning')
             return redirect('beat:index')
 

@@ -47,7 +47,10 @@ class DetailBeatView(DetailView):
             ip_obj = Ipaddress.objects.get(ip_addr=ip_address)
 
         if ip_obj not in beat.hits.all():
-            beat.hits.add(ip_obj)
+            try:
+                beat.hits.add(ip_obj)
+            except:
+                pass
 
         return beat
 
@@ -62,11 +65,15 @@ class ListBeatView(ListView):
             category = Category.objects.get(slug=category_slug)
             if self.request.GET.get('order') == "view":
                 beats = Beat.objects.filter(category=category,is_show=True).annotate(count=Count('hits')).order_by('-count','-created')
+            elif self.request.GET.get('order') == "avalible":
+                beats = Beat.objects.filter(category=category,is_show=True,is_sold=False).order_by('-created')
             else:
                 beats = Beat.objects.filter(category=category,is_show=True).order_by('-created')
         else:
             if self.request.GET.get('order') == "view":
                 beats = Beat.objects.published().annotate(count=Count('hits')).order_by('-count','-created')
+            elif self.request.GET.get('order') == "avalible":
+                beats = Beat.objects.filter(is_show=True,is_sold=False).order_by('-created')
             else:
                 beats = Beat.objects.published().order_by('-created')
 

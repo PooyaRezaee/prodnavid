@@ -1,5 +1,5 @@
 from django.db import models
-from apps import order
+from apps import order as order_app
 
 __all__ = [
     'Category',
@@ -48,7 +48,19 @@ class Beat(models.Model):
     objects = BeatManager()
 
     def is_in_order(self):
-        return order.models.Order.objects.filter(beat=self).exists()
+        has_order = order_app.models.Order.objects.filter(beat=self).exists()
+        if has_order:
+            try:
+                order = order_app.models.Order.objects.get(beat=self)
+                if not order.payment.status == 'C':
+                    return True
+            except:
+                orders = order_app.models.Order.objects.filter(beat=self)
+                for orde in orders:
+                    if not orde.payment.status == 'C':
+                        return True
+
+        return False
 
     def __str__(self):
         return self.title
@@ -68,6 +80,6 @@ class Beat(models.Model):
         
 
 class BeatHits(models.Model):
-    beat = models.ForeignKey(Beat,on_delete=models.CASCADE)
+    beat = models.OneToOneField(Beat,on_delete=models.CASCADE)
     ip_address = models.ForeignKey(Ipaddress,on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

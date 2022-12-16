@@ -21,6 +21,7 @@ urlpatterns = [
     path('messages/<pk>/',MessageView.as_view(),name='message'),   
     path('settings/',SettingsView.as_view(),name='settings'),   
     path('settings/background/',ChangeBackground.as_view(),name='change-background'),   
-    path('orders/',OrdersView.as_view(),name='orders'),   
-    path('users/',UserListView.as_view(),name='users'),   
+    path('orders/',OrdersView.as_view(),name='orders'),  
+    path('order/<int:order_code>/',CancellOrder.as_view(),name='cancel-order'),   
+    path('users/',UserListView.as_view(),name='users'),
 ]

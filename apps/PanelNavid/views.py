@@ -43,7 +43,8 @@ __all__ = [
     'MessagesView',
     'MessageView',
     'OrdersView',
-    'UserListView'
+    'UserListView',
+    'CancellOrder',
 ]
 
 @method_decorator(axes_dispatch, name='dispatch')
@@ -418,7 +419,7 @@ class OrdersView(IsAdminMixin,ListView):
         context["route"] = 'order'
         return context
 
-class UserListView(ListView):
+class UserListView(IsAdminMixin,ListView):
     template_name = 'panel/users.html'
     model = User
     context_object_name = 'users'
@@ -437,3 +438,11 @@ class UserListView(ListView):
 
 
         return context
+    
+class CancellOrder(IsAdminMixin,View):
+    def get(self,request,order_code):
+        order = Order.objects.get(order_code=order_code)
+        order.payment.status = 'C'
+        order.payment.save()
+
+        return redirect('panel:orders')

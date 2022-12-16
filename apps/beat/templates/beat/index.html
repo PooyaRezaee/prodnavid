@@ -15,7 +15,7 @@
             {% for beat in newsted %}
                 <a href="{% url 'beat:detail' beat.code %}" class="items-box">
                     <img class="img-item" src="{{ beat.image_beat.url }}" alt="Navid">
-                    <h2 class="title-item">{{ beat.title }}</h2>
+                    <h2 class="title-item {% if beat.is_sold %}text-danger{% endif %}" {% if beat.is_sold %}style="text-decoration:line-through;"{% endif %}>{{ beat.title }}</h2>
                 </a>
             {% endfor %}
 

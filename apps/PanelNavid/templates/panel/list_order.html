@@ -47,6 +47,9 @@
                                 <td>{{ order.price }}</td>
                                 <td class="text-{{ order.status_payment.1 }}">
                                     {{ order.status_payment.0 }}
+                                    {% if order.status_payment.0 == 'Waiting' %}
+                                        <a href='{% url "panel:cancel-order" order.order_code %}' class='btn btn-sm btn-outline-primary'>Cancel</a>
+                                    {% endif %}
                                 </td>
                                 <td>{{ order.created | timesince }}</td>
                             </tr>

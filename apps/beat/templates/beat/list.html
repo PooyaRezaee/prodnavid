@@ -22,8 +22,9 @@
         <div>
             <span class="btn border-0 text-light" style="cursor: default;">Order By : </span>
             <div class="bg-dark bg-opacity-50 p-3 d-flex flex-row justify-content-end">
-                <a href="?order=time" class="btn btn-sm p-1 {% if order == 'view' %}btn-outline-light{% else %}btn-light{% endif %} mx-2">Newster</a>
+                <a href="?order=time" class="btn btn-sm p-1 {% if order == 'time' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">Newster</a>
                 <a href="?order=view" class="btn btn-sm p-1 {% if order == 'view' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">Most View</a>
+                <a href="?order=avalible" class="btn btn-sm p-1 {% if order == 'avalible' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">Avalable</a>
             </div>
         </div>
     </div>
@@ -33,7 +34,7 @@
         {% for beat in beats %}
             <a href="{% url 'beat:detail' beat.code %}" class="items-box">
                 <img class="img-item" src="{{ beat.image_beat.url }}" alt="{{ beat.title }}-navid">
-                <h2 class="title-item">{{ beat.title }}</h2>
+                <h2 class="title-item {% if beat.is_sold %}text-danger{% endif %}" {% if beat.is_sold %}style="text-decoration:line-through;"{% endif %}>{{ beat.title }}</h2>
             </a>
         {% endfor %}
             
