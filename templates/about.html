@@ -9,26 +9,23 @@
 {% endblock head %}
 
 {% block body %}
-<main class="p-md-5 p-3">
+<main class="p-md-5 ">
     <div class="countiner-about p-md-5 p-2 my-5">
         <p>{{ settings.about }}</p>
 
         <hr>
-        <span class="mb-1">Contact ME</span>
-        <ul>
-            {% if settings.phonenumber %}
-            <li><i class="fa-solid fa-phone"></i> <a href="tel:{{ settings.phonenumber }}">{{ settings.phonenumber }}</a></li>
-            {% endif %}
-            {% if settings.email %}
-            <li><i class="fa-solid fa-envelope"></i> <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></li>
-            {% endif %}
-            {% if settings.instagram %}
-            <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/{{ settings.instagram }}">{{ settings.instagram }}</a></li>
-            {% endif %}
-            {% if settings.linkedin %}
-            <li><i class="fab fa-linkedin"></i> <a href="{{ settings.linkedin }}">{{ settings.linkedin }}</a></li>
-            {% endif %}
-        </ul>
+        {% if settings.phonenumber %}
+        <li><i class="fa-solid fa-phone"></i> <a href="tel:{{ settings.phonenumber }}">{{ settings.phonenumber }}</a></li>
+        {% endif %}
+        {% if settings.email %}
+        <li><i class="fa-solid fa-envelope"></i> <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></li>
+        {% endif %}
+        {% if settings.instagram %}
+        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/{{ settings.instagram }}">{{ settings.instagram }}</a></li>
+        {% endif %}
+        {% if settings.linkedin %}
+        <li><i class="fab fa-linkedin"></i> <a href="{{ settings.linkedin }}">{{ settings.linkedin }}</a></li>
+        {% endif %}
     </div>
     
     {% if request.user.is_authenticated %}

@@ -8,29 +8,28 @@
 {% endblock head %}
 
 {% block body %}
-<main class="p-md-5 p-3">
+<main class="p-md-5">
     <div class="countiner-about p-md-5 p-2 my-5">
         <p>{{ developer.about }}</p>
 
         <hr>
-        <span class="mb-1">Contact ME</span>
-        <ul>
-            {% if developer.phonenumber %}
-            <li><i class="fa-solid fa-phone"></i> <a href="tel:{{ developer.phonenumber }}">{{ developer.phonenumber }}</a></li>
-            {% endif %}
-            {% if developer.email %}
-            <li><i class="fa-solid fa-envelope"></i> <a href="mailto:{{ developer.email }}">{{ developer.email }}</a></li>
-            {% endif %}
-            {% if developer.github %}
-            <li><i class="fab fa-github"></i> <a href="{{ developer.github }}">{{ developer.github }}</a></li>
-            {% endif %}
-            {% if developer.instagram %}
-            <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/{{ developer.instagram }}">{{ developer.instagram }}</a></li>
-            {% endif %}
-            {% if developer.linkedin %}
-            <li><i class="fab fa-linkedin"></i> <a href="{{ developer.linkedin }}">{{ developer.linkedin }}</a></li>
-            {% endif %}
-        </ul>
+        
+        {% if developer.phonenumber %}
+        <li><i class="fa-solid fa-phone"></i> <a href="tel:{{ developer.phonenumber }}">{{ developer.phonenumber }}</a></li>
+        {% endif %}
+        {% if developer.email %}
+        <li><i class="fa-solid fa-envelope"></i> <a href="mailto:{{ developer.email }}">{{ developer.email }}</a></li>
+        {% endif %}
+        {% if developer.github %}
+        <li><i class="fab fa-github"></i> <a href="{{ developer.github }}">{{ developer.github }}</a></li>
+        {% endif %}
+        {% if developer.instagram %}
+        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/{{ developer.instagram }}">{{ developer.instagram }}</a></li>
+        {% endif %}
+        {% if developer.linkedin %}
+        <li><i class="fab fa-linkedin"></i> <a href="{{ developer.linkedin }}">{{ developer.linkedin }}</a></li>
+        {% endif %}
+        
     </div>
 </main>
 {% endblock body %}

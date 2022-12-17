@@ -9,8 +9,8 @@
 {% endblock head %}
 
 {% block body %}
-<main class="p-3 text-center">
-    <div class="badge bg-dark bg-opacity-50 w-75 p-2 couniner-pay">
+<main class="text-center">
+    <div class="badge bg-dark bg-opacity-50 p-2 couniner-pay">
         <h1 class="text-center mx-auto bg-light text-dark col-12 col-md-4 rounded-5">Detail Your Order</h1>
         <hr>
         <img src="{{ beat.image_beat.url }}" class="img-thumbnail float-lg-start" width="200">
@@ -25,6 +25,6 @@
         <small class="text-center note">If the information is correct, click on payment</small>
         <hr>
         <a href="{% url 'accounts:confirm-payment' %}" class="btn btn-primary col-12">Payment</a>
-    </div>~
+    </div>
 </main>
 {% endblock body %}

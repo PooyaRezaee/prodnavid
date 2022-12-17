@@ -76,6 +76,7 @@ class LogoutView(LoginRequiredMixin,View):
 
     
 class ProfileUserView(LoginRequiredMixin,UpdateView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'accounts/profile.html'
     success_url = reverse_lazy('accounts:profile')
     form_class = UserProfileForm

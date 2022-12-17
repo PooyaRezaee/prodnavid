@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import SiteSettings,Message
+from .models import SiteSettings,Message,InfoDeveloper
+
+admin.site.register(InfoDeveloper)
 
 admin.site.register(SiteSettings)
 

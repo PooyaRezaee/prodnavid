@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from datetime import datetime
 from django.shortcuts import get_object_or_404
-
+from django.urls import reverse_lazy
 # ZARIN PAL
 from django.http import HttpResponse
 import requests
@@ -37,6 +37,7 @@ __all__ = [
 ]
 
 class OrdersView(LoginRequiredMixin,ListView):
+    login_url = reverse_lazy('accounts:login')
     template_name = 'order/orders.html'
     context_object_name = 'orders'
 
@@ -45,7 +46,8 @@ class OrdersView(LoginRequiredMixin,ListView):
         return queryset
 
 
-class ConfirmOrder(View):
+class ConfirmOrder(LoginRequiredMixin,View):
+    login_url = reverse_lazy('accounts:login')
     def get(self,request):
         if not request.user.is_authenticated:
             messages.error(request,f"Log in first or <a class='text-primary' href='{reverse('accounts:register')}'>register</a> if you don't have an account",extra_tags='danger')
@@ -63,6 +65,7 @@ class ConfirmOrder(View):
         return render(request,'order/confirm.html',{'beat':beat})
 
 class ConfirmPayment(LoginRequiredMixin,View):
+    login_url = reverse_lazy('accounts:login')
     def get(self,request):
         beat_code = self.request.session['code']
         beat = Beat.objects.get(code=beat_code)
@@ -202,6 +205,8 @@ class VerifyPaymentView(View):
     
 
 class ResendBeat(LoginRequiredMixin,View):
+    login_url = reverse_lazy('accounts:login')
+
     def get(self,request,order_id):
         order = get_object_or_404(Order,order_code=order_id)
         if order.user == request.user:

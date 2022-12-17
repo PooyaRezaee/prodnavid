@@ -55,6 +55,7 @@ footer{
     font-family: "Yellowtail", sans-serif;
     font-weight: 600;
     text-shadow: 0px 0px 5px black;
+    font-size: 2.5em !important;
 }
 #btn-register:hover {
     background-color: #1f1f1f;
@@ -73,7 +74,7 @@ footer{
 }
 .title-list {
     font-weight: 500;
-    font-size: calc(1.4rem + 1.6vw);
+    font-size: calc(2rem + 1.6vw);
 }
 .items-box {
     padding: 0.5rem;
@@ -90,11 +91,14 @@ footer{
 }
 .title-item {
     color: #efefef;
-    font-size: 1em;
+    font-size: 2em;
     text-align: center;
 }
 .img-item {
-    width: 6em;
+    width: 13em;
+}
+.img-item-inl {
+    width: 11em;
 }
 .show-more{
     font-size: 3em;
@@ -120,6 +124,9 @@ footer{
     border: 1px solid #000;
 }
 @media (min-width: 600px) {
+    #nav-lable {
+        font-size: 2.5em !important;
+    }
     .img-item {
         width: 10em;
     }
@@ -135,6 +142,10 @@ footer{
         --bs-btn-padding-y: 0.5rem !important;
         --bs-btn-padding-x: 1rem !important;
         --bs-btn-font-size: 1rem !important;
+    }
+    .title-list {
+        font-weight: 500;
+        font-size: calc(1.4rem + 1.6vw);
     }
 }
 @media (min-width: 1080px) {
