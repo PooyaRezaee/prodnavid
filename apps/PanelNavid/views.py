@@ -23,6 +23,7 @@ from apps.beat.utils import bucket
 from apps.ear.utils import get_client_ip
 from apps.order.models import Order
 from .mixins import IsAdminMixin
+from .utils import save_background
 
 __all__ = [
     'LoginView',
@@ -35,7 +36,6 @@ __all__ = [
     'CategoryListView',
     'SendEmailView',
     'SettingsView',
-    'ChangeBackground',
     'DeleteBeat',
     'DeleteCategory',
     'ModifyBeatView',
@@ -270,7 +270,7 @@ class SettingsView(IsAdminMixin,UpdateView):
     
     def form_valid(self, form):
         messages.success(self.request,'Settings Updated',extra_tags='success')
-        return super().form_valid( form)
+        return super().form_valid(form)
 
     def form_invalid(self, form):
         messages.warning(self.request,'Form Not Valid',extra_tags='warning')
@@ -280,13 +280,6 @@ class SettingsView(IsAdminMixin,UpdateView):
         context = super().get_context_data(**kwargs)
         context["route"] = 'settings'
         return context
-
-class ChangeBackground(IsAdminMixin,RedirectView):
-    pattern_name = 'panel:settings'
-
-    def get_redirect_url(self, *args, **kwargs):
-        save_background(self.request.FILES['background'])
-        return super().get_redirect_url(*args, **kwargs)
 
 class DeleteBeat(IsAdminMixin,View):
     def get(self,request,id):

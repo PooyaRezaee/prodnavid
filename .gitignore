@@ -1,7 +1,7 @@
 __pychae__/
 venv/
 .env
-media/
+./media/
 todos.py
 /__pycache__/
 *.pyc

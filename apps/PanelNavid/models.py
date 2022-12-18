@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.cache import cache
 from apps.accounts.models import User
+from django.conf import settings
 class SingletonModel(models.Model):
     class Meta:
         abstract = True
@@ -24,6 +25,14 @@ class SingletonModel(models.Model):
     def set_cache(self):
         cache.set(self.__class__.__name__, self)
 
+def get_root():
+    if settings.DEBUG:
+        root = 'static'
+    else:
+        root = str(settings.STATIC_ROOT)
+
+    return root
+
 class SiteSettings(SingletonModel):
     email = models.EmailField(default='navid.g.h.909xx@gmail.com')
     adress = models.CharField(max_length=256,default='',blank=True)
@@ -31,6 +40,7 @@ class SiteSettings(SingletonModel):
     instagram = models.CharField(max_length=256, default='prodnavid',blank=True)
     linkedin = models.CharField(max_length=256, default='',blank=True)
     about = models.CharField(max_length=1024,default='I am Navid And Create Beat')
+    background = models.ImageField(upload_to='background/',blank=True,null=True)
     stop_seling = models.BooleanField(default=False)
     cdn_active = models.BooleanField(default=False)
 

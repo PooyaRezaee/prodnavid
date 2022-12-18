@@ -23,4 +23,6 @@ urlpatterns = [
     path('', include('apps.beat.urls',namespace='beat')),
     path('account/', include('apps.accounts.urls',namespace='accounts')),
     path('panel/personal/SecurePageXx/', include('apps.PanelNavid.urls',namespace='panel')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

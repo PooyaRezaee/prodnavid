@@ -31,7 +31,11 @@
 </head>
 
 <body>
-    <img src="{% static 'media/background.jpg' %}" id="backbody">
+    {% if settings.background %}
+        <img src="{{ settings.background.url }}" id="backbody">
+    {% else %}
+        <img src="{% static 'media/background.jpg' %}" id="backbody">
+    {% endif %}
     <header>
         {% include 'inc/navbar.html' %}
     </header>
