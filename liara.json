@@ -1,0 +1,7 @@
+{
+	"platform": "django",
+	"app":"prodnavid",
+ 	"django": {
+    		"pythonVersion": "3.10"
+  	}
+}
