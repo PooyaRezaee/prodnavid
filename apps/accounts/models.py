@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from .utils import send_custom_email
+from django.utils.translation import gettext as _
 
 class UserManager(BaseUserManager):
     def create_user(self,email,full_name,password,how_meet):
@@ -51,10 +52,10 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser,PermissionsMixin):
     FIND_CHOICE = [
-        ('fri','Firnd'),
-        ('goo','Google'),
-        ('soc','social'),
-        ('oth','other'),
+        ('fri',_('Firnd')),
+        ('goo',_('Google')),
+        ('soc',_('social')),
+        ('oth',_('other')),
     ]
 
     full_name = models.CharField(max_length=30)

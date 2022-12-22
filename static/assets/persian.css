@@ -1,0 +1,39 @@
+@font-face {
+    font-family: "vazir-reg";
+    src: url("fonts/Vazir-Regular-FD.ttf");
+    src: url("fonts/Vazir-Regular-FD.ttf") format("truetype");
+}
+@font-face {
+    font-family: "mitra-t";
+    src: url("fonts/MitraDeformed.ttf");
+    src: url("fonts/MitraDeformed.ttf") format("truetype");
+}
+*{
+    direction: rtl;
+}
+body {
+    font-family: "vazir-reg", Arial, Helvetica !important;
+}
+nav {
+    font-weight: 900;
+    direction: rtl;
+}
+#nav-lable{
+    font-family: "mitra-t", Arial, Helvetica !important;
+    font-weight: bold;
+}
+#title-form{
+    font-family: "mitra-t", Arial, Helvetica !important;
+    font-weight: bold;
+}
+.ms-auto{
+    margin-left: 0 !important;
+    margin-right: auto;
+}
+.me-auto{
+    margin-right: 0 !important;
+    margin-left: auto;
+}
+.form-control{
+    direction: ltr !important;
+}

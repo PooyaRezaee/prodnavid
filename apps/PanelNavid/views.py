@@ -109,7 +109,7 @@ class DashbordView(IsAdminMixin,View):
 
         categories = Category.objects.all()
         parts = []
-        cate_count = Category.objects.annotate(Count('beats')).values_list('name', 'beats__count')
+        cate_count = Category.objects.annotate(Count('beats')).values_list('name_en', 'beats__count')
         for c in cate_count:
             parts.append(c)
 

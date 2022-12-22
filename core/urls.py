@@ -13,16 +13,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from apps.beat.views import change_lang
+
 urlpatterns = [
+    path('', change_lang),
+    
+]
+
+urlpatterns += i18n_patterns(
+    path('panel/personal/SecurePageXx/', include('apps.PanelNavid.urls',namespace='panel')),
     path('panel_admin/SecPage909PR/main/', admin.site.urls),
     path('', include('apps.beat.urls',namespace='beat')),
     path('account/', include('apps.accounts.urls',namespace='accounts')),
-    path('panel/personal/SecurePageXx/', include('apps.PanelNavid.urls',namespace='panel')),
-]
+)
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

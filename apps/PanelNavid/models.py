@@ -2,6 +2,9 @@ from django.db import models
 from django.core.cache import cache
 from apps.accounts.models import User
 from django.conf import settings
+from translated_fields import TranslatedField
+from django.utils.translation import gettext as _
+
 class SingletonModel(models.Model):
     class Meta:
         abstract = True
@@ -39,14 +42,14 @@ class SiteSettings(SingletonModel):
     phonenumber = models.CharField(max_length=13, default='',blank=True)
     instagram = models.CharField(max_length=256, default='prodnavid',blank=True)
     linkedin = models.CharField(max_length=256, default='',blank=True)
-    about = models.CharField(max_length=1024,default='I am Navid And Create Beat')
+    about = TranslatedField(models.CharField(max_length=1024,default='I am Navid And Create Beat'))
     background = models.ImageField(upload_to='background/',blank=True,null=True)
     stop_seling = models.BooleanField(default=False)
     cdn_active = models.BooleanField(default=False)
 
 class Message(models.Model):
-    subject = models.CharField(max_length=30)
-    message = models.CharField(max_length=256)
+    subject = models.CharField(max_length=30,verbose_name=_('Subject'))
+    message = models.CharField(max_length=256,verbose_name=_('Message'))
     meta = models.CharField(max_length=128,blank=True,null=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -58,4 +61,4 @@ class InfoDeveloper(SingletonModel):
     instagram = models.CharField(max_length=256, default='',blank=True)
     github = models.CharField(max_length=256, default='https://github.com/pooyarezaee',blank=True)
     linkedin = models.CharField(max_length=256, default='https://linkedin.com/in/pooya-rezeemoghadam',blank=True)
-    about = models.CharField(max_length=1024,default='I am PooyaRezaee(Developer This WebApplication)')
+    about = TranslatedField(models.CharField(max_length=1024,default='I am PooyaRezaee(Developer This WebApplication'))

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 
-{% block title %}Orders{% endblock title %}
+{% block title %}{% translate "Orders" %}{% endblock title %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'assets/user.css' %}">
@@ -17,11 +18,11 @@
             <table class="table table-responsive">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">Code Beat</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Satus</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{% translate "Order ID" %}</th>
+                        <th scope="col">{% translate "Code Beat" %}</th>
+                        <th scope="col">{% translate "Price" %}</th>
+                        <th scope="col">{% translate "Satus" %}</th>
+                        <th scope="col">{% translate "Action" %}</th>
                     </tr>
                 </thead>
                 <tbody class="text-light">
@@ -33,11 +34,11 @@
                             <td scope="col"><span class="badge bg-{{ order.status_payment.1 }} {% if order.status_payment.1 == 'warning' %} text-dark {% endif %} p-2 rounded-5">{{ order.status_payment.0 }}</span></td>
                             <td scope="col">
                                 {% if order.status_payment.0 == 'Paid' %}
-                                    <a href="{% url 'accounts:resend' order.order_code %}" class="btn btn-sm w-100 w-m-40 btn-primary">ReSend</a>
+                                    <a href="{% url 'accounts:resend' order.order_code %}" class="btn btn-sm w-100 w-m-40 btn-primary">{% translate "ReSend" %}</a>
                                 {% else %}
-                                    <a href="{{ order.payment.link }}" class="btn btn-sm w-100 w-m-40 btn-primary">Pay</a>
+                                    <a href="{{ order.payment.link }}" class="btn btn-sm w-100 w-m-40 btn-primary">{% translate "Pay" %}</a>
                                 {% endif %}
-                                <a href="{% url 'beat:about' %}#message" class="btn btn-sm w-100 w-m-40 btn-warning">Report</a>
+                                <a href="{% url 'beat:about' %}#message" class="btn btn-sm w-100 w-m-40 btn-warning">{% translate "Report" %}</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -48,7 +49,7 @@
     <!-- empt -->
     <div id="empty" class="text-center">
         <i class="text-danger fa-solid fa-xmark"></i>
-        <p>Order Is Empty</p>
+        <p>{% translate "Order Is Empty" %}</p>
     </div>
     {% endif %}
 

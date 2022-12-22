@@ -1,6 +1,7 @@
 from django.db import models
 from apps.accounts.models import User
 from apps.beat.models import Beat
+from django.utils.translation import gettext as _
 
 class Order(models.Model):
     order_code = models.PositiveIntegerField(primary_key=True)
@@ -18,13 +19,13 @@ class Order(models.Model):
         color = None
         match self.payment.status:
             case 'P':
-                status = "Paid"
+                status = _("Paid")
                 color = 'success'
             case 'W':
-                status = "Waiting"
+                status = _("Waiting")
                 color = 'warning'
             case 'C':
-                status = "Cancelled"
+                status = _("Cancelled")
                 color = 'danger'
         
         return (status,color)

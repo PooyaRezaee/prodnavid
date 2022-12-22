@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
-{% block title %}About Me{% endblock title %}
+{% block title %}{% translate "About Me" %}{% endblock title %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'assets/about.css' %}">
@@ -31,7 +32,7 @@
     {% if request.user.is_authenticated %}
     <div class="countiner-about col-sm-12 col-md-8 col-xl-6 mx-auto p-3">
         <form method="POST">
-            <h2>Send Message To me</h2>
+            <h2>{% translate "Send Message To me" %}</h2>
             {% crispy form %}
         </form>
     </div>

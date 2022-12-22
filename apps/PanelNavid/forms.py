@@ -47,6 +47,10 @@ class CreateCategoryForm(forms.ModelForm):
         model = Category
 
         fields = '__all__'
+        labels = {
+            "name_en": "English Name",
+            "name_fa": "Persian Name"
+        }
 
     helper = FormHelper()
     helper.add_input(Submit('submit', 'Add Category', css_class='btn btn-primary w-100'))
@@ -65,6 +69,10 @@ class SettingSiteForm(forms.ModelForm):
         model = SiteSettings
 
         fields = '__all__'
+        labels = {
+            "about_en": "English About",
+            "about_fa": "Persian About"
+        }
 
     helper = FormHelper()
     helper.add_input(Submit('submit', 'Update Information Site', css_class='btn btn-primary w-100'))
@@ -86,6 +94,10 @@ class UpdateCategoryForm(forms.ModelForm):
         model = Category
 
         fields = '__all__'
+        labels = {
+            "name_en": "English Name",
+            "name_fa": "Persian Name"
+        }
 
     helper = FormHelper()
     helper.add_input(Submit('submit', 'Update', css_class='btn btn-primary w-100'))

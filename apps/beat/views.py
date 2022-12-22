@@ -6,6 +6,7 @@ from .models import *
 from .forms import MessageForm
 from django.contrib import messages
 from apps.PanelNavid.models import Message,InfoDeveloper
+from django.utils.translation import activate
 
 __all__ = [
     'HomeView',
@@ -15,6 +16,13 @@ __all__ = [
     'DeveloperView',
     'FreeListBeatView',
 ]
+
+
+def change_lang(request):
+
+    activate('en')
+    return redirect('beat:index')# 	activate(request.GET.get('lang'))
+# 	return redirect(request.GET.get('next'))
 
 class HomeView(View):
     def get(self,request):

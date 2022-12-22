@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Beats{% endblock title %}
+{% block title %}{% translate "Beats" %}{% endblock title %}
 
 {% block head %}
 {% endblock head %}
@@ -10,9 +11,9 @@
 <main class="p-3">
     <div class="nav-beat d-md-flex w-100 justify-content-md-between">
         <div>
-            <span class="btn border-0 text-light" style="cursor: default;">Category : </span>
+            <span class="btn border-0 text-light" style="cursor: default;">{% translate "Category" %} : </span>
             <div class="bg-dark bg-opacity-50 p-3 d-flex flex-md-row flex-wrap justify-content-start">
-                <a href="{% url 'beat:list' %}" class="btn btn-sm {% if not category_active %}btn-danger{% else %}btn-outline-danger{% endif %} mx-2 p-1">All</a>
+                <a href="{% url 'beat:list' %}" class="btn btn-sm {% if not category_active %}btn-danger{% else %}btn-outline-danger{% endif %} mx-2 p-1">{% translate "All" %}</a>
                 {% for category in categories %}
                     <a href="{% if free %}{% url 'beat:category-free' category.slug %}{% else %}{% url 'beat:category' category.slug %}{% endif %}" class="btn btn-sm {% if category_active == category.slug %}btn-danger{% else %}btn-outline-danger{% endif %} mx-2 p-1">{{ category.name }}</a>
                 {% endfor %}
@@ -20,11 +21,11 @@
         </div>
 
         <div>
-            <span class="btn border-0 text-light" style="cursor: default;">Order By : </span>
+            <span class="btn border-0 text-light" style="cursor: default;">{% translate "Order By" %} : </span>
             <div class="bg-dark bg-opacity-50 p-3 d-flex flex-row justify-content-end">
-                <a href="?order=time" class="btn btn-sm p-1 {% if order == 'time' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">Newster</a>
-                <a href="?order=view" class="btn btn-sm p-1 {% if order == 'view' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">Most View</a>
-                <a href="?order=avalible" class="btn btn-sm p-1 {% if order == 'avalible' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">Avalable</a>
+                <a href="?order=time" class="btn btn-sm p-1 {% if order == 'time' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">{% translate "Newster" %}</a>
+                <a href="?order=view" class="btn btn-sm p-1 {% if order == 'view' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">{% translate "Most View" %}</a>
+                <a href="?order=avalible" class="btn btn-sm p-1 {% if order == 'avalible' %}btn-light{% else %}btn-outline-light{% endif %} mx-2">{% translate "Avalable" %}</a>
             </div>
         </div>
     </div>

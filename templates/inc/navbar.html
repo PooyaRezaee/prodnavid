@@ -1,6 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-dark p-4">
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark p-3">
     <div class="container-fluid">
-        <h1 id="nav-lable" class="text-center me-3 text-danger" style="cursor: pointer;">ProdNavid</h1>
+        <h1 id="nav-lable" class="text-center me-3 text-danger" style="cursor: pointer;">{% translate "ProdNavid" %}</h1>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -10,25 +14,26 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'beat:list' %}">Beats</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'beat:list' %}">{% translate "Beats" %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'beat:about' %}">About Me</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'beat:about' %}">{% translate "Me" %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'beat:developer' %}">Developer</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'beat:developer' %}">{% translate "Developer" %}</a>
                 </li>
             </ul>
             <hr>
             <ul class="navbar-nav ms-auto">
                 {% if not request.user.is_authenticated %}
                 <li class="nav-item m-1">
-                    <a id="btn-register" class="nav-link btn btn-outline-primary text-primary w-100"
-                        aria-current="page" href="{% url 'accounts:register' %}">Register</a>
+                    <a id="btn-register" class="nav-link  btn text-primary w-100"
+                        aria-current="page" href="{% url 'accounts:register' %}">{% translate "Register" %}</a>
                 </li>
+                <li class="nav-item  d-none d-lg-block"><span class="nav-link">|</span></li>
                 <li class="nav-item m-1">
-                    <a id="btn-login" class="nav-link btn btn-outline-success text-success w-100"
-                        aria-current="page" href="{% url 'accounts:login' %}">Login</a>
+                    <a id="btn-login" class="nav-link btn text-success w-100"
+                        aria-current="page" href="{% url 'accounts:login' %}">{% translate "Login" %}</a>
                 </li>
                 {% else %} 
                 
@@ -36,11 +41,11 @@
                     <li class="nav-item dropdown me-2">
                         <div class="nav-link">
                             <span type="button" class="dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-user-secret"></i> User
+                                <i class="fa-solid fa-user-secret"></i> {{ request.user.full_name }}
                             </span>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{% url 'panel:login' %}">GoPanel</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">{% translate "Profile" %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'panel:login' %}">{% translate "Go_Panel" %}</a></li>
                             </ul>
                         </div>
                     </li>
@@ -48,21 +53,31 @@
                     <li class="nav-item dropdown me-2">
                         <div class="nav-link">
                             <span type="button" class="dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-user"></i> User
+                                <i class="fa-solid fa-user"></i> {{ request.user.full_name }}
                             </span>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{% url 'accounts:orders' %}">Orders</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">{% translate "Profile" %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:orders' %}">{% translate "Orders" %}</a></li>
                             </ul>
                         </div>
                     </li>
                 {% endif %}
                     
                 <li class="nav-item m-1">
-                    <a id="btn-login" class="nav-link btn btn-outline-danger text-danger text-danger w-100"
-                        aria-current="page" href="{% url 'accounts:logout' %}">Logout</a>
+                    <a id="btn-login" class="nav-link btn text-danger w-100"
+                        aria-current="page" href="{% url 'accounts:logout' %}">{% translate "Logout" %}</a>
                 </li>
                 {% endif %}
+                <hr>
+                <li class="nav-item m-1">
+                    <div class="nav-link lang">
+                        <a id="btn-register" class="nav-link d-inline"
+                            aria-current="page" href="/en/{{request.path|slice:'4:'}}">EN</a>
+                        <span>/</span>
+                        <a id="btn-login" class="nav-link d-inline"
+                            aria-current="page" href="/fa/{{request.path|slice:'4:'}}">FA</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

@@ -1,0 +1,109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-22 11:57+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\apps\accounts\forms.py:32
+msgid "Passwords don't match"
+msgstr "دو فیلد پسورد برابر نیست"
+
+#: .\apps\accounts\forms.py:54 .\apps\accounts\forms.py:69
+msgid "Email"
+msgstr "ایمیل"
+
+#: .\apps\accounts\forms.py:56 .\apps\accounts\forms.py:71
+msgid "Password"
+msgstr "پسورد"
+
+#: .\apps\accounts\forms.py:62 .\apps\accounts\forms.py:85
+msgid "This email exist"
+msgstr "این ایمیل وجود دارد"
+
+#: .\apps\accounts\forms.py:67
+msgid "Full Name"
+msgstr "نام کامل"
+
+#: .\apps\accounts\forms.py:73
+msgid "Repat Password"
+msgstr "تکرار پسورد"
+
+#: .\apps\accounts\forms.py:74
+msgid "How Meet"
+msgstr "چطور آشنا شدید"
+
+#: .\apps\accounts\forms.py:78
+#: .\apps\accounts\templates\accounts\register.html:16
+msgid "Register"
+msgstr "ثبت نام"
+
+#: .\apps\accounts\forms.py:96
+msgid "Password Is Short"
+msgstr "پسورد کوتاه است"
+
+#: .\apps\accounts\forms.py:98
+msgid "Password Not Mach"
+msgstr "پسورد باید یکسان باشد"
+
+#: .\apps\accounts\forms.py:101
+msgid "Your Email"
+msgstr "ایمیلتان"
+
+#: .\apps\accounts\forms.py:102
+msgid "Your Password"
+msgstr "پسوردتان"
+
+#: .\apps\accounts\models.py:55
+msgid "Firnd"
+msgstr "دوست"
+
+#: .\apps\accounts\models.py:56
+msgid "Google"
+msgstr "گوگل"
+
+#: .\apps\accounts\models.py:57
+msgid "social"
+msgstr "شبکه های اجتماعی"
+
+#: .\apps\accounts\models.py:58
+msgid "other"
+msgstr "سایر"
+
+#: .\apps\accounts\templates\accounts\login.html:5
+msgid "Login User"
+msgstr "ورود کاربر"
+
+#: .\apps\accounts\templates\accounts\login.html:15
+#: .\apps\accounts\templates\accounts\login.html:18
+msgid "Login"
+msgstr "ورود"
+
+#: .\apps\accounts\templates\accounts\profile.html:5
+msgid "Profile User"
+msgstr "پروفایل کاربر"
+
+#: .\apps\accounts\templates\accounts\profile.html:15
+msgid "Update Your Profile"
+msgstr "اپدیت پروفایل شما"
+
+#: .\apps\accounts\templates\accounts\profile.html:18
+msgid "Update"
+msgstr "اپدیت"
+
+#: .\apps\accounts\templates\accounts\register.html:6
+msgid "Register User"
+msgstr "ثبت نام کاربر"

@@ -1,5 +1,7 @@
 from django.db import models
 from apps import order as order_app
+from django.utils.translation import gettext as _
+from translated_fields import TranslatedField
 
 __all__ = [
     'Category',
@@ -18,7 +20,7 @@ class Ipaddress(models.Model):
     ip_addr = models.GenericIPAddressField()
 
 class Category(models.Model):
-    name = models.CharField(max_length=16)
+    name = TranslatedField(models.CharField(_('Category Name'),max_length=16))
     slug = models.SlugField()
     on_home = models.BooleanField(default=False)
 
@@ -67,9 +69,9 @@ class Beat(models.Model):
     
     def get_type(self):
         if self.type == 'D':
-            return 'Demo'
+            return _('Demo')
         if self.type == 'F':
-            return 'Full'
+            return _('Full')
     
     def get_time_humanize(self):
         time = self.time_audio

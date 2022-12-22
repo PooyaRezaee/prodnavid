@@ -24,8 +24,7 @@ ZP_API_REQUEST = settings.ZP_API_REQUEST
 ZP_API_VERIFY = settings.ZP_API_VERIFY
 ZP_API_STARTPAY = settings.ZP_API_STARTPAY
 
-# TODO AMOUNT RIAL
-CallbackURL = 'http://127.0.0.1:8000/account/order/verify/'
+CallbackURL = 'https://prodnavid.iran.liara.run/account/order/verify/'
 
 
 __all__ = [
@@ -228,7 +227,3 @@ class ResendBeat(LoginRequiredMixin,View):
             messages.warning(request,'Error Internal',extra_tags='danger')
         
         return redirect('accounts:orders')
-
-# class SendReport(LoginRequiredMixin,View):
-#     def get(self,request):
-#         return HttpResponseRedirect(reverse('beat:about') + '#message')

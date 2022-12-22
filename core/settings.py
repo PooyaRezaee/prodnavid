@@ -62,6 +62,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -88,6 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
                 'apps.PanelNavid.context_processors.settings',
                 'apps.PanelNavid.context_processors.new_messages',
             ],
@@ -104,6 +106,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'test', 
+        'USER': 'test',
+        'PASSWORD': '1',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
     }
 }
 
@@ -129,6 +136,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+LOCALE_PATHS = (
+    BASE_DIR / 'locale/',
+)
+
+LANGUAGES = [
+    ('en','English'),
+    ('fa','Persian'),
+]
 
 LANGUAGE_CODE = 'en-us'
 

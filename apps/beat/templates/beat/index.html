@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}{% translate "Home" %}{% endblock title %}
 
 {% block head %}{% endblock head %}
 
 {% block body %}
 <main class="p-3">
     <div class="countiner-list">
-        <h1 class="title-list">Newsted</h1>
+        <h1 class="title-list">{% translate "Newsted" %}</h1>
 
         <div class="countiner-items">
             
@@ -20,13 +22,19 @@
             {% endfor %}
 
             <div style="position: relative;">
-                <a href="{% url 'beat:list' %}?order=time" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+                <a href="{% url 'beat:list' %}?order=time" class="show-more">
+                    {% if LANGUAGE_CODE == 'fa' %}
+                    <i class="fa-solid fa-angles-left"></i>
+                    {% else %}
+                    <i class="fa-solid fa-angles-right"></i>
+                    {% endif %}
+                </a>
             </div>
         </div>
     </div>
 
     <div class="countiner-list">
-        <h1 class="title-list">Most Viewed</h1>
+        <h1 class="title-list">{% translate "Most Viewed" %}</h1>
         <div class="countiner-items">
 
             {% for beat in mustview %}
@@ -36,7 +44,13 @@
                 </a>
             {% endfor %}
             <div style="position: relative;">
-                <a href="{% url 'beat:list' %}?order=view" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+                <a href="{% url 'beat:list' %}?order=view" class="show-more">
+                    {% if LANGUAGE_CODE == 'fa' %}
+                    <i class="fa-solid fa-angles-left"></i>
+                    {% else %}
+                    <i class="fa-solid fa-angles-right"></i>
+                    {% endif %}
+                </a>
             </div>
         </div>
     </div>
@@ -44,7 +58,7 @@
 
     {% if free %}
         <div class="countiner-list">
-            <h1 class="title-list">Free</h1>
+            <h1 class="title-list">{% translate "Free" %}</h1>
 
             <div class="countiner-items">
                 {% for beat in free %}
@@ -54,7 +68,13 @@
                     </a>
                 {% endfor %}
                 <div style="position: relative;">
-                    <a href="{% url 'beat:free' %}" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+                    <a href="{% url 'beat:free' %}" class="show-more">
+                        {% if LANGUAGE_CODE == 'fa' %}
+                        <i class="fa-solid fa-angles-left"></i>
+                        {% else %}
+                        <i class="fa-solid fa-angles-right"></i>
+                        {% endif %}
+                    </a>
                 </div>
             </div>
         </div>
@@ -73,7 +93,13 @@
                         </a>
                     {% endfor %}
                     <div style="position: relative;">
-                        <a href="{% url 'beat:category' category.slug %}" class="show-more"><i class="fa-solid fa-angles-right"></i></a>
+                        <a href="{% url 'beat:category' category.slug %}" class="show-more">
+                            {% if LANGUAGE_CODE == 'fa' %}
+                            <i class="fa-solid fa-angles-left"></i>
+                            {% else %}
+                            <i class="fa-solid fa-angles-right"></i>
+                            {% endif %}
+                        </a>
                     </div>
                 </div>
             </div>

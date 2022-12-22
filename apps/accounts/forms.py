@@ -5,6 +5,7 @@ from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.utils.translation import gettext as _
 
 from .models import User
 
@@ -28,7 +29,7 @@ class UserCreationForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Passwords don't match")
+            raise ValidationError(_("Passwords don't match"))
         return password2
 
     def save(self, commit=True):
@@ -50,38 +51,38 @@ class UserRegisterForm(forms.Form):
     full_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(widget=forms.EmailInput(
-        attrs={'class': 'form-control'}))
+        attrs={'class': 'form-control'}),label=_('Email'))
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),label=_('Password'))
 
     def clean_email(self):
         email = self.cleaned_data['email']
         user = User.objects.filter(email=email).exists()
         if user:
-            raise ValidationError('This email exist')
+            raise ValidationError(_('This email exist'))
         return email
 
 class UserRegisterForm(forms.Form):
     full_name = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control mx-auto w-100','placeholder':'Full Name'}),label='')
+        widget=forms.TextInput(attrs={'class': 'form-control mx-auto w-100','placeholder':_('Full Name')}),label='')
     email = forms.EmailField(widget=forms.EmailInput(
-        attrs={'class': 'form-control','placeholder':'Email'}),label='')
+        attrs={'class': 'form-control','placeholder':_('Email')}),label='')
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control mx-auto w-100','placeholder':'Password'}),label='')
+        widget=forms.PasswordInput(attrs={'class': 'form-control mx-auto w-100','placeholder':_('Password')}),label='')
     password_r = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control mx-auto w-100','placeholder':'Repat Password'}),label='')
-    meet = forms.ChoiceField(choices=User.FIND_CHOICE,required=False,widget=forms.Select(attrs={'class': 'form-control mx-auto w-100','placeholder':'How Meet'}),label='How Toy Meet ?')
-    captcha = ReCaptchaField(widget=ReCaptchaV3)
+        widget=forms.PasswordInput(attrs={'class': 'form-control mx-auto w-100','placeholder':_('Repat Password')}),label='')
+    meet = forms.ChoiceField(choices=User.FIND_CHOICE,required=False,widget=forms.Select(attrs={'class': 'form-control mx-auto w-100','placeholder':_('How Meet')}),label=_('How Meet'))
+    captcha = ReCaptchaField(widget=ReCaptchaV3,label='')
 
     helper = FormHelper()
-    helper.add_input(Submit('submit', 'Register', css_class='btn btn-primary w-100'))
+    helper.add_input(Submit('submit', _('Register'), css_class='btn btn-primary w-100'))
     helper.form_method = 'POST'
 
     def clean_email(self):
         email = self.cleaned_data['email']
         user = User.objects.filter(email=email).exists()
         if user:
-            raise ValidationError('This email exist')
+            raise ValidationError(_('This email exist'))
         return email
     
     def clean_password_r(self):
@@ -92,14 +93,14 @@ class UserRegisterForm(forms.Form):
                 if len(password) >= 6:
                     return reapet_password
                 else:
-                    raise ValidationError('Password Is Short')
+                    raise ValidationError(_('Password Is Short'))
             else:
-                raise ValidationError('Password Not Mach')
+                raise ValidationError(_('Password Not Mach'))
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control mx-auto','placeholder':'Your Email'}),label='Email Address')
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mx-auto','placeholder':'Your Password'}),label='Password')
-    captcha = ReCaptchaField(widget=ReCaptchaV3)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control mx-auto','placeholder':_('Your Email')}),label='')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mx-auto','placeholder':_('Your Password')}),label='')
+    captcha = ReCaptchaField(widget=ReCaptchaV3,label='')
 
 class UserProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
