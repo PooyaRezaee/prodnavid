@@ -8,3 +8,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Beat)
 class BeatAdmin(admin.ModelAdmin):
     exclude = ('code','time_audio')
+
+@admin.register(Ipaddress)
+class CategoryAdmin(admin.ModelAdmin):
+    pass
