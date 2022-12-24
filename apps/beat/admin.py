@@ -12,3 +12,7 @@ class BeatAdmin(admin.ModelAdmin):
 @admin.register(Ipaddress)
 class CategoryAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(BeatHits)
+class CategoryAdmin(admin.ModelAdmin):
+    pass

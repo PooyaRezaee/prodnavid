@@ -21,8 +21,7 @@ __all__ = [
 def change_lang(request):
 
     activate('en')
-    return redirect('beat:index')# 	activate(request.GET.get('lang'))
-# 	return redirect(request.GET.get('next'))
+    return redirect('beat:index')
 
 class HomeView(View):
     def get(self,request):

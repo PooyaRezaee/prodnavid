@@ -30,7 +30,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'prodnavid.iran.liara.run',
+    'www.prodnavid.iran.liara.run',
+    'prodnavid.ir',
+    'www.prodnavid.ir',
+    ]
 
 
 # Application definition
@@ -106,11 +111,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'test', 
-        #'USER': 'test',
-        #'PASSWORD': '1',
-        #'HOST': '127.0.0.1', 
-        #'PORT': '5432',
+        'NAME': 'test', 
+        'USER': 'test',
+        'PASSWORD': '1',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
     }
 }
 

@@ -6,7 +6,8 @@ from translated_fields import TranslatedField
 __all__ = [
     'Category',
     'Beat',
-    'Ipaddress'
+    'Ipaddress',
+    'BeatHits'
 ]
 
 class BeatManager(models.Manager):
