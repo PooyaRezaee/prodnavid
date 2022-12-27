@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 11:14+0330\n"
+"POT-Creation-Date: 2022-12-27 15:32+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,3 +85,50 @@ msgstr "گزارش مشکل"
 #: .\apps\order\templates\order\orders.html:52
 msgid "Order Is Empty"
 msgstr "شما سفارشی ندارید"
+
+#: .\apps\order\views.py:54
+msgid "Log in first or <a class='text-primary' href='{}'>register</a> if you don't "
+"have an account"
+msgstr "اول وارد شوید یا <a class='text-primary' href='{}'>ثبت نام</a> کنید اگر اکانت ندارید"
+
+#: .\apps\order\views.py:74
+msgid "Beat Not available"
+msgstr "بیت در حال حاضر در دسترس نیست"
+
+#: .\apps\order\views.py:117
+msgid "Error"
+msgstr "ارور"
+
+#: .\apps\order\views.py:138
+msgid "You Order Paid<br>Tank You For Trust To Me"
+msgstr "سفارش شما پرداخت شده است<br>از اعتمادتان به ما متشکریم"
+
+#: .\apps\order\views.py:160
+msgid "Beat File Sended To Email For You"
+msgstr "فایل بیت به ایمیل شما ارسال شده است"
+
+#: .\apps\order\views.py:163
+msgid ""
+"The transaction has already been paid<br>If You Have Problem Send Email For "
+"Me"
+msgstr "تراکنش قبلا پرداخت شده است<br>اگر مشکلی دارید برای من ایمیل ارسال کنید"
+
+#: .\apps\order\views.py:166
+msgid "The transaction Failed<br>If You Have Problem Send Email For Me"
+msgstr "تراکنش شکست خورد<br>اگر مشکلی وجود دارد برای من ایمیل ارسال کنید"
+
+#: .\apps\order\views.py:176
+msgid "Transaction failed or canceled by user"
+msgstr "تراکنش شکست خورد یا توسط کاربر لغو شد"
+
+#: .\apps\order\views.py:199
+msgid "Resendded Beat TO Your Email"
+msgstr "بیت مجدد برای شما ایمیل شد"
+
+#: .\apps\order\views.py:201
+msgid "Must First Pay this Beat"
+msgstr "باید اول این بیت را پرداخت کنید"
+
+#: .\apps\order\views.py:203
+msgid "Error Internal"
+msgstr "ارور داخلی"

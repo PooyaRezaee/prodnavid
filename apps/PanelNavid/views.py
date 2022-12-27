@@ -426,9 +426,6 @@ class UserListView(IsAdminMixin,ListView):
         context['count_s'] = User.objects.filter(how_meet='soc').count()
         context['count_o'] = User.objects.filter(how_meet='oth').count()
 
-        for user in User.objects.all():
-            print(user.how_meet)
-
 
         return context
     

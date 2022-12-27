@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 11:57+0330\n"
+"POT-Creation-Date: 2022-12-27 14:50+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
 #: .\apps\PanelNavid\models.py:51
 msgid "Subject"
-msgstr ""
+msgstr "موضوع"
 
 #: .\apps\PanelNavid\models.py:52
 msgid "Message"
 msgstr "پیغام"
 
-#: .\apps\PanelNavid\models.py:64
-msgid "I am PooyaRezaee(Developer This WebApplication)"
-msgstr "من پویا رضایی مقدم هستم(توسعه دهنده این وب اپلیکیشن)"
+#~ msgid "I am PooyaRezaee(Developer This WebApplication)"
+#~ msgstr "من پویا رضایی مقدم هستم(توسعه دهنده این وب اپلیکیشن)"

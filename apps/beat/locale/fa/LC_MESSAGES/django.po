@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 11:57+0330\n"
+"POT-Creation-Date: 2022-12-27 14:50+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,21 +18,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\apps\beat\forms.py:26
+#: .\apps\beat\forms.py:31
 msgid "Send Message"
 msgstr ""
 
-#: .\apps\beat\models.py:23
+#: .\apps\beat\models.py:24
 #, fuzzy
 #| msgid "Category"
 msgid "Category Name"
 msgstr "دسته بندی"
 
-#: .\apps\beat\models.py:72
+#: .\apps\beat\models.py:73
 msgid "Demo"
 msgstr "دمو"
 
-#: .\apps\beat\models.py:74
+#: .\apps\beat\models.py:75
 msgid "Full"
 msgstr "کامل"
 

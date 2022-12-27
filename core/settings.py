@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
     'www.prodnavid.iran.liara.run',
     'prodnavid.ir',
     'www.prodnavid.ir',
+    '127.0.0.1',
     ]
 
 

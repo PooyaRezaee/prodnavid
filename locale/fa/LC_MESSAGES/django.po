@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 11:08+0330\n"
+"POT-Creation-Date: 2022-12-27 14:50+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,23 +70,23 @@ msgstr "توسعه دهنده"
 msgid "Register"
 msgstr "ثبت نام"
 
-#: .\templates\inc\navbar.html:35
+#: .\templates\inc\navbar.html:36
 msgid "Login"
 msgstr "ورود"
 
-#: .\templates\inc\navbar.html:46 .\templates\inc\navbar.html:58
+#: .\templates\inc\navbar.html:47 .\templates\inc\navbar.html:59
 msgid "Profile"
 msgstr "پروفایل"
 
-#: .\templates\inc\navbar.html:47
+#: .\templates\inc\navbar.html:48
 msgid "Go_Panel"
 msgstr "رفتن به پنل"
 
-#: .\templates\inc\navbar.html:59
+#: .\templates\inc\navbar.html:60
 msgid "Orders"
 msgstr "سفارشات"
 
-#: .\templates\inc\navbar.html:67
+#: .\templates\inc\navbar.html:68
 msgid "Logout"
 msgstr "خروج"
 

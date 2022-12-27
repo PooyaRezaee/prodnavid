@@ -14,6 +14,8 @@ from django.conf import settings
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
+
 # ZARIN PAL
 from django.http import HttpResponse
 import requests
@@ -24,7 +26,7 @@ ZP_API_REQUEST = settings.ZP_API_REQUEST
 ZP_API_VERIFY = settings.ZP_API_VERIFY
 ZP_API_STARTPAY = settings.ZP_API_STARTPAY
 
-CallbackURL = 'https://prodnavid.iran.liara.run/account/order/verify/'
+# CallbackURL = 'https://prodnavid/' + reverse_lazy('accounts:verify-payment')
 
 
 __all__ = [
@@ -49,7 +51,7 @@ class ConfirmOrder(LoginRequiredMixin,View):
     login_url = reverse_lazy('accounts:login')
     def get(self,request):
         if not request.user.is_authenticated:
-            messages.error(request,f"Log in first or <a class='text-primary' href='{reverse('accounts:register')}'>register</a> if you don't have an account",extra_tags='danger')
+            messages.error(request,_("Log in first or <a class='text-primary' href='{}'>register</a> if you don't have an account").format(reverse('accounts:register')),extra_tags='danger')
             return redirect('accounts:login')
 
         code_beat = request.GET.get('beat')
@@ -69,7 +71,7 @@ class ConfirmPayment(LoginRequiredMixin,View):
         beat_code = self.request.session['code']
         beat = Beat.objects.get(code=beat_code)
         if beat.is_in_order():
-            messages.warning(request,'Beat Not available',extra_tags='warning')
+            messages.warning(request,_('Beat Not available'),extra_tags='warning')
             return redirect('beat:index')
 
         if beat_code:
@@ -88,47 +90,40 @@ class ConfirmPayment(LoginRequiredMixin,View):
                 price=beat.price,
                 payment=payment
             )
-
-            if False: #ZARIN PAL hANDELS
-                description = "Test Desciption"
-                req_data = {
-                    "merchant_id": MERCHANT,
-                    "amount": int(str(order.price) + "0"),
-                    "callback_url": CallbackURL,
-                    "description": description,
-                    "metadata": {"mobile": order.user.phone_number, "email": order.user.email}
-                }
-                req_header = {"accept": "application/json","content-type": "application/json'"}
-                req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
-                    req_data), headers=req_header)
-                authority = req.json()['data']['authority']
-                # authority = req.json()
-                if len(req.json()['errors']) == 0:
-                    self.request.session['order_code'] = order.order_code
-                    payment.link = ZP_API_STARTPAY.format(authority=authority)
-                    payment.save()
-                    return redirect(payment.link)
-                else:
-                    e_code = req.json()['errors']['code']
-                    e_message = req.json()['errors']['message']
-                    messages.warning(request,f'Have A Error In Payment,Plase Send Message To Email <br>Error code: {e_code}, Error Message: {e_message}')
-                    return redirect('beat:index')
-            else:
+            CallbackURL = 'http://127.0.0.1:8000' + reverse_lazy('accounts:verify-payment')
+            description = "ProdNavid.ir"
+            req_data = {
+                "merchant_id": MERCHANT,
+                "amount": int(str(order.price) + "0"),
+                "callback_url": CallbackURL,
+                "description": description,
+                "metadata": {"mobile": str(order.user.phone_number), "email": order.user.email}
+            }
+            req_header = {"accept": "application/json","content-type": "application/json'"}
+            req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
+                req_data), headers=req_header)
+            authority = req.json()['data']['authority']
+            if len(req.json()['errors']) == 0:
                 self.request.session['order_code'] = order.order_code
-                payment.link = ZP_API_STARTPAY.format(authority='Uknow')
+                payment.link = ZP_API_STARTPAY.format(authority=authority)
                 payment.save()
-                return HttpResponseRedirect(CallbackURL+"?Status=test")
+                return redirect(payment.link)
+            else:
+                e_code = req.json()['errors']['code']
+                e_message = req.json()['errors']['message']
+                messages.warning(request,_('Have A Error In Payment,Plase Send Message To Email <br>Error code: {}').format(f'{e_code} | {e_message}'))
+                return redirect('beat:index')
         else:
-            messages.success(request,'Error',extra_tags='danger')
+            messages.success(request,_('Error'),extra_tags='danger')
             return redirect('beat:index')
     
 class VerifyPaymentView(View):
     def get(self,request):
         t_status = request.GET.get('Status')
+        t_authority = request.GET['Authority']
+        order = Order.objects.get(order_code=self.request.session['order_code'])
+        beat = Beat.objects.get(code=self.request.session['code'])
         if request.GET.get('Status') == 'OK':
-            t_authority = request.GET['Authority'] #FOR ZARINPAL MUST UP
-            order = Order.objects.get(order_code=self.request.session['order_code'])
-            beat = Beat.objects.get(code=self.request.session['code'])
             req_header = {"accept": "application/json",
                         "content-type": "application/json'"}
             req_data = {
@@ -140,15 +135,17 @@ class VerifyPaymentView(View):
             if len(req.json()['errors']) == 0:
                 t_status = req.json()['data']['code']
                 if t_status == 100:
-                    messages.success(request,'You Order Paid<br>Tank You For Trust To Me',extra_tags='success')
+                    messages.success(request,_('You Order Paid<br>Tank You For Trust To Me'),extra_tags='success')
                     # Order Operation
                     order.sended = True
+                    order.recived = True
                     order.payment.status = "P"
                     order.payment.paid = datetime.now()
                     order.save()
                     order.payment.save()
                     beat.is_sold = True
                     beat.save()
+
                     # SEND BEAT TO EMAIL
                     message = f"""
                     Hey {order.user},
@@ -160,46 +157,25 @@ class VerifyPaymentView(View):
                     OrderID:{order.order_code}
                     """
                     order.user.send_email('ProdNaid : Full Beat',message)
-                    messages.info(request,'Beat File Sended To Email For You')
+                    messages.info(request,_('Beat File Sended To Email For You'))
                     return redirect('accounts:order')
                 elif t_status == 101:
-                    messages.warning(request,'The transaction has already been paid<br>If You Have Problem Send Email For Me',extra_tags='warning')
+                    messages.warning(request,_('The transaction has already been paid<br>If You Have Problem Send Email For Me'),extra_tags='warning')
                     return redirect('accounts:order')
                 else:
-                    messages.warning(request,'The transaction has already been paid<br>If You Have Problem Send Email For Me',extra_tags='warning')
+                    messages.warning(request,_('The transaction Failed<br>If You Have Problem Send Email For Me'),extra_tags='warning')
+                    order.payment.status = "C"
+                    order.payment.save()
                     return redirect('accounts:order')
             else:
                 e_code = req.json()['errors']['code']
                 e_message = req.json()['errors']['message']
-                messages.warning(request,f'Have A Error In Payment,Plase Send Message To Email <br>Error code: {e_code}, Error Message: {e_message}')
+                messages.warning(request,_('Have A Error In Payment,Plase Send Message To Email <br>Error code: {}').format(f'{e_code} | {e_message}'))
                 return redirect('beat:index')
-        elif request.GET.get('Status') == 'test': # TEST
-            order = Order.objects.get(order_code=self.request.session['order_code'])
-            beat = Beat.objects.get(code=self.request.session['code'])
-            messages.success(request,'You Order Paid<br>Tank You For Trust To Me',extra_tags='success')
-            # Order Operation
-            order.sended = True
-            order.payment.status = "P"
-            order.payment.paid = datetime.now()
-            order.save()
-            order.payment.save()
-            beat.is_sold = True
-            beat.save()
-            # SEND BEAT TO EMAIL
-            message = f"""
-            Hey {order.user},
-            Thank You For Buy Beat
-            This Link Is Your Full Beat
-            {beat.main_beat.url}
-
-            BeatID:{beat.code}
-            OrderID:{order.order_code}
-            """
-            order.user.send_email('ProdNaid : Full Beat',message)
-            messages.info(request,'Beat File Sended To Email For You')
-            return redirect('accounts:orders')
         else:
-            messages.warning(request,'Transaction failed or canceled by user')
+            messages.warning(request,_('Transaction failed or canceled by user'))
+            order.payment.status = "C"
+            order.payment.save()
             return redirect('beat:index')
     
 
@@ -220,10 +196,10 @@ class ResendBeat(LoginRequiredMixin,View):
                 """
 
                 order.user.send_email('ProdNaid : ResendBeat',message)
-                messages.success(request,'Resendded Beat TO Your Email',extra_tags='success')
+                messages.success(request,_('Resendded Beat TO Your Email'),extra_tags='success')
             else:
-                messages.warning(request,'Must First Pay this Beat',extra_tags='warning')
+                messages.warning(request,_('Must First Pay this Beat'),extra_tags='warning')
         else:
-            messages.warning(request,'Error Internal',extra_tags='danger')
+            messages.warning(request,_('Error Internal'),extra_tags='danger')
         
         return redirect('accounts:orders')
