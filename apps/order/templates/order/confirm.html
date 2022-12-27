@@ -26,7 +26,7 @@
         <hr>
         <small class="text-center note">{% translate "If the information is correct, click on payment" %}</small>
         <hr>
-        <a href="{% url 'accounts:confirm-payment' %}" class="btn btn-primary col-12">{% translate "Payment" %}</a>
+        <a href="{% url 'accounts:confirm-payment' %}?lang={{ LANGUAGE_CODE }}" class="btn btn-primary col-12">{% translate "Payment" %}</a>
     </div>
 </main>
 {% endblock body %}

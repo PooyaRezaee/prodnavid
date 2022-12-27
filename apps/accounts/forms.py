@@ -67,6 +67,7 @@ class UserRegisterForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control mx-auto w-100','placeholder':_('Full Name')}),label='')
     email = forms.EmailField(widget=forms.EmailInput(
         attrs={'class': 'form-control','placeholder':_('Email')}),label='')
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mx-auto w-100','placeholder':'Phone Number'}),label='',required=False)
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control mx-auto w-100','placeholder':_('Password')}),label='')
     password_r = forms.CharField(

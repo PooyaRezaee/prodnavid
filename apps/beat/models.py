@@ -83,6 +83,6 @@ class Beat(models.Model):
         
 
 class BeatHits(models.Model):
-    beat = models.OneToOneField(Beat,on_delete=models.CASCADE)
+    beat = models.ForeignKey(Beat,on_delete=models.CASCADE)
     ip_address = models.ForeignKey(Ipaddress,on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

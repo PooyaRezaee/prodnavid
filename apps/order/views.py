@@ -15,6 +15,7 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
+from django.db import transaction
 
 # ZARIN PAL
 from django.http import HttpResponse
@@ -26,7 +27,6 @@ ZP_API_REQUEST = settings.ZP_API_REQUEST
 ZP_API_VERIFY = settings.ZP_API_VERIFY
 ZP_API_STARTPAY = settings.ZP_API_STARTPAY
 
-# CallbackURL = 'https://prodnavid/' + reverse_lazy('accounts:verify-payment')
 
 
 __all__ = [
@@ -137,36 +137,43 @@ class VerifyPaymentView(View):
                 if t_status == 100:
                     messages.success(request,_('You Order Paid<br>Tank You For Trust To Me'),extra_tags='success')
                     # Order Operation
-                    order.sended = True
-                    order.recived = True
-                    order.payment.status = "P"
-                    order.payment.paid = timezone.now()
-                    order.save()
-                    order.payment.save()
-                    beat.is_sold = True
-                    beat.save()
+                    try:
+                        with transaction.atomic():
+                            order.sended = True
+                            order.recived = True
+                            order.payment.status = "P"
+                            order.payment.paid = timezone.now()
+                            order.save()
+                            order.payment.save()
+                            beat.is_sold = True
+                            beat.save()
 
-                    # SEND BEAT TO EMAIL
-                    message = f"""
-                    Hey {order.user},
-                    Thank You For Buy Beat
-                    This Link Is Your Full Beat
-                    {beat.main_beat.url}
+                            # SEND BEAT TO EMAIL
+                            message = f"""
+                            Hey {order.user},
+                            Thank You For Buy Beat
+                            This Link Is Your Full Beat
+                            {beat.main_beat.url}
 
-                    BeatID:{beat.code}
-                    OrderID:{order.order_code}
-                    """
-                    order.user.send_email('ProdNaid : Full Beat',message)
-                    messages.info(request,_('Beat File Sended To Email For You'))
-                    return redirect('accounts:order')
+                            BeatID:{beat.code}
+                            OrderID:{order.order_code}
+                            """
+                            order.user.send_email('ProdNaid : Full Beat',message)
+                            messages.info(request,_('Beat File Sended To Email For You'))
+                            return redirect('accounts:orders')
+                    except Exception as e:
+                        messages.warning(request,'Have Problem.Plaese Send Email',extra_tags='warning')
+                        messages.error(request,str(e),extra_tags='danger')
+                        return redirect('beat:index')
+                
                 elif t_status == 101:
                     messages.warning(request,_('The transaction has already been paid<br>If You Have Problem Send Email For Me'),extra_tags='warning')
-                    return redirect('accounts:order')
+                    return redirect('accounts:orders')
                 else:
                     messages.warning(request,_('The transaction Failed<br>If You Have Problem Send Email For Me'),extra_tags='warning')
                     order.payment.status = "C"
                     order.payment.save()
-                    return redirect('accounts:order')
+                    return redirect('accounts:orders')
             else:
                 e_code = req.json()['errors']['code']
                 e_message = req.json()['errors']['message']

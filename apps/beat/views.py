@@ -7,7 +7,7 @@ from .forms import MessageForm
 from django.contrib import messages
 from apps.PanelNavid.models import Message,InfoDeveloper
 from django.utils.translation import activate
-
+from apps.ear.utils import get_client_ip
 __all__ = [
     'HomeView',
     'DetailBeatView',
@@ -47,17 +47,14 @@ class DetailBeatView(DetailView):
         code_beat = self.kwargs.get('code_beat')
         beat =  get_object_or_404(Beat.objects.published(),code=code_beat)
 
-        ip_address = self.request.user.ip_address
+        ip_address = get_client_ip(self.request)
         if not Ipaddress.objects.filter(ip_addr=ip_address).exists():
             ip_obj = Ipaddress.objects.create(ip_addr=ip_address)
         else:
             ip_obj = Ipaddress.objects.get(ip_addr=ip_address)
 
         if ip_obj not in beat.hits.all():
-            try:
-                beat.hits.add(ip_obj)
-            except:
-                pass
+            beat.hits.add(ip_obj)
 
         return beat
 

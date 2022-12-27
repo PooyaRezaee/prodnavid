@@ -16,6 +16,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">PhoneNumber</th>
                                 <th scope="col">Is Admin</th>
+                                <th scope="col">Last Login</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,6 +32,14 @@
                                     <i class="fa fa-check-circle"></i>
                                     {% else %}
                                     <i class="fa fa-multiply"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.last_login %}
+                                        {{ user.last_login | timesince }}
+                                    {% else %}
+                                        <span class='text-danger'>This May Spam ; Registerd on {{ user.joined }}</span>
+                                        <a href="{% url 'panel:user-delete' user.id %}" class="btn btn-danger w-100">Delete</a>
                                     {% endif %}
                                 </td>
                             </tr>

@@ -23,7 +23,6 @@ from apps.beat.utils import bucket
 from apps.ear.utils import get_client_ip
 from apps.order.models import Order
 from .mixins import IsAdminMixin
-from .utils import save_background
 
 __all__ = [
     'LoginView',
@@ -45,6 +44,7 @@ __all__ = [
     'OrdersView',
     'UserListView',
     'CancellOrder',
+    'DeleteUser',
 ]
 
 @method_decorator(axes_dispatch, name='dispatch')
@@ -222,6 +222,7 @@ class BeatListView(IsAdminMixin,ListView):
     template_name = 'panel/list_beat.html'
     model = Beat
     context_object_name = 'beats'
+    ordering = ('-created',)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -233,6 +234,7 @@ class CategoryListView(IsAdminMixin,ListView):
     template_name = 'panel/list_category.html'
     model = Category
     context_object_name = 'categories'
+    ordering = ('-created',)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -406,6 +408,7 @@ class OrdersView(IsAdminMixin,ListView):
     template_name = 'panel/list_order.html'
     model = Order
     context_object_name = 'orders'
+    ordering = ('-created',)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -416,6 +419,7 @@ class UserListView(IsAdminMixin,ListView):
     template_name = 'panel/users.html'
     model = User
     context_object_name = 'users'
+    ordering = ('-last_login',)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -436,3 +440,13 @@ class CancellOrder(IsAdminMixin,View):
         order.payment.save()
 
         return redirect('panel:orders')
+
+class DeleteUser(IsAdminMixin,View):
+    def get(self,request,id):
+        try:
+            User.objects.get(id=id).delete()
+            messages.success(request,'User Deleted',extra_tags='success')
+        except:
+            messages.warning(request,'Have Problem In Delete User',extra_tags='warning')
+
+        return redirect('panel:users')

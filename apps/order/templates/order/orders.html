@@ -33,11 +33,11 @@
                             <td scope="col"><span class="badge bg-primary p-2 rounded-5">{{ order.price | intcomma }}</span></td>
                             <td scope="col"><span class="badge bg-{{ order.status_payment.1 }} {% if order.status_payment.1 == 'warning' %} text-dark {% endif %} p-2 rounded-5">{{ order.status_payment.0 }}</span></td>
                             <td scope="col">
-                                {% if order.status_payment.0 == 'Paid' %}
+                                {% if order.status_payment.0 == "Paid" or order.status_payment.0 == "پرداخت شده" %}
                                     <a href="{% url 'accounts:resend' order.order_code %}" class="btn btn-sm w-100 w-m-40 btn-primary">{% translate "ReSend" %}</a>
-                                {% elif order.status_payment.0 == 'Waiting' %}
+                                {% elif order.status_payment.0 == "Waiting" or order.status_payment.0 == "در انتظار" %}
                                     <a href="{{ order.payment.link }}" class="btn btn-sm w-100 w-m-40 btn-primary">{% translate "Pay" %}</a>
-                                {%else%%}
+                                {% else %}
                                 {% comment %} Not Button {% endcomment %}
                                 {% endif %}
                                 <a href="{% url 'beat:about' %}#message" class="btn btn-sm w-100 w-m-40 btn-warning">{% translate "Report" %}</a>

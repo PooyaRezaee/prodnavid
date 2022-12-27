@@ -44,6 +44,7 @@ class UserManager(BaseUserManager):
             full_name=full_name,
             is_admin=True,
             is_email_active=True,
+            ip_register='127.0.0.1'
         )
 
         user.set_password(password)
@@ -64,6 +65,8 @@ class User(AbstractBaseUser,PermissionsMixin):
     phone_number = models.CharField(max_length=15,blank=True,null=True)
     is_admin = models.BooleanField(default=False)
     is_email_active = models.BooleanField(default=False)
+    joined = models.DateTimeField(auto_now_add=True)
+    ip_register = models.CharField(max_length=20,default='0.0.0.0')
 
     objects = UserManager()
 
