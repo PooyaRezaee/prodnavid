@@ -35,8 +35,10 @@
                             <td scope="col">
                                 {% if order.status_payment.0 == 'Paid' %}
                                     <a href="{% url 'accounts:resend' order.order_code %}" class="btn btn-sm w-100 w-m-40 btn-primary">{% translate "ReSend" %}</a>
-                                {% else %}
+                                {% elif order.status_payment.0 == 'Waiting' %}
                                     <a href="{{ order.payment.link }}" class="btn btn-sm w-100 w-m-40 btn-primary">{% translate "Pay" %}</a>
+                                {%else%%}
+                                {% comment %} Not Button {% endcomment %}
                                 {% endif %}
                                 <a href="{% url 'beat:about' %}#message" class="btn btn-sm w-100 w-m-40 btn-warning">{% translate "Report" %}</a>
                             </td>

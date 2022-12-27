@@ -11,7 +11,7 @@ from .models import Payment,Order
 import random
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from datetime import datetime
+from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -90,8 +90,8 @@ class ConfirmPayment(LoginRequiredMixin,View):
                 price=beat.price,
                 payment=payment
             )
-            CallbackURL = 'http://127.0.0.1:8000' + reverse_lazy('accounts:verify-payment')
-            description = "ProdNavid.ir"
+            CallbackURL = 'http://prodnavid.ir' + reverse_lazy('accounts:verify-payment')
+            description = f"Sold > {beat_code}"
             req_data = {
                 "merchant_id": MERCHANT,
                 "amount": int(str(order.price) + "0"),
@@ -140,7 +140,7 @@ class VerifyPaymentView(View):
                     order.sended = True
                     order.recived = True
                     order.payment.status = "P"
-                    order.payment.paid = datetime.now()
+                    order.payment.paid = timezone.now()
                     order.save()
                     order.payment.save()
                     beat.is_sold = True

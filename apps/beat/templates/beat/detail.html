@@ -17,9 +17,9 @@
 
 {% block body %}
 <main class="p-md-5 p-4">
-    <img class="img-item float-end" src="{{ beat.image_beat.url }}" alt="{{ beat.title }}" {% if LANGUAGE_CODE == 'fa' %}style="float: left !important;"{% endif %}>
+    <img class="img-item" src="{{ beat.image_beat.url }}" alt="{{ beat.title }}">
 
-    <div class="detail float-start mt-5 mt-md-0" {% if LANGUAGE_CODE == 'fa' %}style="float: right !important;"{% endif %}>
+    <div class="detail  mt-5 mt-md-0">
         <table class="table text-light text-center">
             <tbody>
                 <tr>
